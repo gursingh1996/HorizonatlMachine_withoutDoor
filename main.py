@@ -2,7 +2,11 @@ from math import pi
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
+from Libraries.serialData import serialData
  
+myTimer = serialData.serialData()
+myTimer.initLoop()
+
 root = Tk()     #initialize the root window
 root.geometry("1024x600")
 root.config(bg='#000CA4')
