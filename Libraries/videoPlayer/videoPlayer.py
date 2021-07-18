@@ -7,7 +7,7 @@ videoOnPlay=1
 
 class videoPlayer():
     def __init__(self, label):
-        self.path = "G:\Python Projects\Without door\Code\Assets\Videos\BailPlateDown.mp4"
+        self.path = "/home/pi/Desktop/pythonProject/Assets"
         self.label = label
     
     def load(self, path, label):
