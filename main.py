@@ -7,7 +7,8 @@ from Libraries.GPIO import GPIO
 myTimer = serialData.serialData()
 myTimer.initLoop()
 
-btn = GPIO.GPIO()
+btn = GPIO.GPIOPins()
+btn.initPins()
 btn.beginReading()
 
 root = Tk()     #initialize the root window
@@ -46,3 +47,6 @@ myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area 
 myVideoPlayer.playVideo()
 
 root.mainloop()     #read all elements in the window
+
+
+

@@ -1,1 +1,1 @@
-from Libraries.serialData import GPIO
+from Libraries.GPIO import GPIO
