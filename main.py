@@ -1,11 +1,14 @@
-from math import pi
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
 from Libraries.serialData import serialData
+from Libraries.GPIO import GPIO
  
 myTimer = serialData.serialData()
 myTimer.initLoop()
+
+btn = GPIO.GPIO()
+btn.beginReading()
 
 root = Tk()     #initialize the root window
 root.geometry("1024x600")
