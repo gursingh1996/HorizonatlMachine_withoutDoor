@@ -1,15 +1,20 @@
+from Libraries.InputExpander.inputExpander import inputExpander
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
 from Libraries.serialData import serialData
 from Libraries.GPIO import GPIO
  
-myTimer = serialData.serialData()
-myTimer.initLoop()
+# myTimer = serialData.serialData()         #Serial communication
+# myTimer.initLoop()
 
-btn = GPIO.GPIOPins()
-btn.initPins()
-btn.beginReading()
+# btn = GPIO.GPIOPins()
+# btn.initPins()
+# btn.beginReading()
+
+inputs = inputExpander.inputExpander()
+inputs.init()
+inputs.readDataLoop()
 
 root = Tk()     #initialize the root window
 root.geometry("1024x600")
