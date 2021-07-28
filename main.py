@@ -1,9 +1,9 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-from Libraries.serialData import serialData
-from Libraries.GPIO import GPIO
-from Libraries.inputExpander import inputExpander
+# from Libraries.serialData import serialData
+# from Libraries.GPIO import GPIO
+# from Libraries.inputExpander import inputExpander
  
 # myTimer = serialData.serialData()         #Serial communication
 # myTimer.initLoop()
@@ -12,9 +12,9 @@ from Libraries.inputExpander import inputExpander
 # btn.initPins()
 # btn.beginReading()
 
-inputs = inputExpander.inputExpander()
-inputs.init()
-inputs.readDataLoop()
+# inputs = inputExpander.inputExpander()
+# inputs.init()
+# inputs.readDataLoop()
 
 root = Tk()     #initialize the root window
 root.geometry("1024x600")
@@ -32,8 +32,12 @@ btnColor = '#F3E82F'
 # label_videoPannel = Label(root, height=28, width=109)
 label_videoPannel = Label(root)
 
+def openDiagnostics():
+    root.destroy()
+    import Pages.Diagnostics
+
 btn_fullScreen = Button(text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-btn_diagnostics = Button(text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+btn_diagnostics = Button(text="DIAGNOSTICS", command=openDiagnostics, height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
 btn_moreParameters = Button(text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
 btn_settings = Button(text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
 label_pressureText = Label(root, font=textFont, text="PRESSURE: 2200 PSI", bg='#000CA4', fg='#ffffff')
