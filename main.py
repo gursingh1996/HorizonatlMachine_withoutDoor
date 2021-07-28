@@ -1,9 +1,9 @@
-from Libraries.InputExpander.inputExpander import inputExpander
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
 from Libraries.serialData import serialData
 from Libraries.GPIO import GPIO
+from Libraries.inputExpander import inputExpander
  
 # myTimer = serialData.serialData()         #Serial communication
 # myTimer.initLoop()
