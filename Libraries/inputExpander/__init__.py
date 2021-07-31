@@ -1,1 +1,1 @@
-from Libraries.inputExpander import inputExpander, InputIconsDisplay
+from Libraries.inputExpander import inputExpander

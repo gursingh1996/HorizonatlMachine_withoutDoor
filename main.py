@@ -1,10 +1,10 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-from Libraries.inputExpander import inputExpander, InputIconsDisplay
+from Libraries.inputExpander import inputExpander
 
-updateMachineInputs = inputExpander()
-updateMachineInputs.readDataLoop()
+# updateMachineInputs = inputExpander.inputExpander()
+# updateMachineInputs.readDataLoop()
 
 mainBackgroundColor = '#000CA4'
 
@@ -68,17 +68,25 @@ class DiagnosticsPage(Frame):
         self.icon_btnUnpressed = PhotoImage(file="Assets/Icons/InputUnpressed.png")
         self.icon_btnPressed = PhotoImage(file="Assets/Icons/InputPressed.png")
 
-        iconInput1 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=0, column=1)
-        iconInput2 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=1, column=1)
-        iconInput3 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=2, column=1)
-        iconInput4 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=3, column=1)
-        iconInput5 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=4, column=1)
-        iconInput6 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=5, column=1)
-        iconInput7 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=6, column=1)
-        iconInput8 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=7, column=1)
-        
+        iconInput1 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput1.grid(row=0, column=1)
+        iconInput2 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput2.grid(row=1, column=1)
+        iconInput3 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput3.grid(row=2, column=1)
+        iconInput4 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput4.grid(row=3, column=1)
+        iconInput5 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput5.grid(row=4, column=1)
+        iconInput6 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput6.grid(row=5, column=1)
+        iconInput7 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput7.grid(row=6, column=1)
+        iconInput8 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
+        iconInput8.grid(row=7, column=1)
+
         iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
-        iconsChange = InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
+        iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
         iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":

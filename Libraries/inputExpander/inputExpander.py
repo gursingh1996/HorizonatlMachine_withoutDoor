@@ -1,8 +1,10 @@
 import threading
 import RPi.GPIO as GPIO
 from time import sleep
+from tkinter import *
 
 machineInputs = ['0']*8
+machineInputs[2] = '1'
 
 class inputExpander():
     CLKINH = 19
@@ -74,6 +76,8 @@ class InputIconsDisplay():
     def changeIconsWithInputs(self):
         for i in range(8):
             if machineInputs[i]=='0':
-                self.iconLabels = self.iconUnpressed
+                self.iconLabels[i].config(image=self.iconUnpressed)
+                self.iconLabels[i].image = self.iconUnpressed
             else:
-                self.iconLabels = self.iconPressed
+                self.iconLabels[i].config(image=self.iconPressed)
+                self.iconLabels[i].image = self.iconPressed
