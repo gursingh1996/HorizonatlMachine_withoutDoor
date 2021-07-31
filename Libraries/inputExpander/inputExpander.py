@@ -4,7 +4,6 @@ from time import sleep
 from tkinter import *
 
 machineInputs = ['0']*8
-machineInputs[2] = '1'
 
 class inputExpander():
     CLKINH = 19
@@ -53,7 +52,8 @@ class inputExpander():
                 sleep(0.001)
                 
             GPIO.output(inputExpander.CLKINH, GPIO.LOW)
-            inputExpander.machineInputs = tempInputs
+            global machineInputs
+            machineInputs = tempInputs
             sleep(1)
             print("Done")
 
@@ -74,10 +74,13 @@ class InputIconsDisplay():
         thread.start()
 
     def changeIconsWithInputs(self):
-        for i in range(8):
-            if machineInputs[i]=='0':
-                self.iconLabels[i].config(image=self.iconUnpressed)
-                self.iconLabels[i].image = self.iconUnpressed
-            else:
-                self.iconLabels[i].config(image=self.iconPressed)
-                self.iconLabels[i].image = self.iconPressed
+        while True:
+            print(machineInputs)
+            for i in range(8):
+                if machineInputs[i]=='0':
+                    self.iconLabels[i].config(image=self.iconUnpressed)
+                    self.iconLabels[i].image = self.iconUnpressed
+                else:
+                    self.iconLabels[i].config(image=self.iconPressed)
+                    self.iconLabels[i].image = self.iconPressed
+            sleep(1)

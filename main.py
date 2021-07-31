@@ -3,8 +3,8 @@ import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
 from Libraries.inputExpander import inputExpander
 
-# updateMachineInputs = inputExpander.inputExpander()
-# updateMachineInputs.readDataLoop()
+updateMachineInputs = inputExpander.inputExpander()
+updateMachineInputs.readDataLoop()
 
 mainBackgroundColor = '#000CA4'
 
