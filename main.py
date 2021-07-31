@@ -1,14 +1,18 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-    
+from Libraries.inputExpander import inputExpander, InputIconsDisplay
+
+updateMachineInputs = inputExpander()
+updateMachineInputs.readDataLoop()
+
 mainBackgroundColor = '#000CA4'
 
 class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(StartPage)
+        self.switch_frame(DiagnosticsPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -57,7 +61,25 @@ class StartPage(Frame):
 class DiagnosticsPage(Frame):
     def __init__(self, master):
         Frame.__init__(self, master, bg=mainBackgroundColor)
-        btn_fullScreen = Button(self, text="FULL SCREEN\nVIEW", command=lambda: master.switch_frame(StartPage)).grid()
+        textFont = font.Font(family="Segoe UI", size=22, weight='bold')
+        for i in range(8):
+            Label(self, text="Input "+str(i+1)+": ", font=textFont, bg=mainBackgroundColor, fg='#ffffff').grid(row=i, column=0)  
+        
+        self.icon_btnUnpressed = PhotoImage(file="Assets/Icons/InputUnpressed.png")
+        self.icon_btnPressed = PhotoImage(file="Assets/Icons/InputPressed.png")
+
+        iconInput1 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=0, column=1)
+        iconInput2 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=1, column=1)
+        iconInput3 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=2, column=1)
+        iconInput4 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=3, column=1)
+        iconInput5 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=4, column=1)
+        iconInput6 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=5, column=1)
+        iconInput7 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=6, column=1)
+        iconInput8 = Label(self, image=self.icon, bg=mainBackgroundColor).grid(row=7, column=1)
+        
+        iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
+        iconsChange = InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
+        iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":
     app = myApp()
