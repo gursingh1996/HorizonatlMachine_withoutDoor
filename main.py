@@ -12,7 +12,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(DiagnosticsPage)
+        self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
