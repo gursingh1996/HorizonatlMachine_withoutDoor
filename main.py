@@ -1,10 +1,10 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-from Libraries.inputExpander import inputExpander
+#from Libraries.inputExpander import inputExpander
 
-updateMachineInputs = inputExpander.inputExpander()
-updateMachineInputs.readDataLoop()
+#updateMachineInputs = inputExpander.inputExpander()
+#updateMachineInputs.readDataLoop()
 
 mainBackgroundColor = '#000CA4'
 
@@ -32,31 +32,38 @@ class StartPage(Frame):
         textFont = font.Font(family="Segoe UI", size=22, weight='bold')
         btnTextColor = '#707070'
         btnColor = '#F3E82F'
+        
+        video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
+        video_frame.grid(row=0, column=1) 
+        label_videoPannel = Label(video_frame)
+        label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
+        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel, 0)   #use label as area to project video
+
 
         btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)
         btn_frame.grid(row=0, column=0) 
         
         btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                                command=lambda: master.switch_frame(DiagnosticsPage))
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+                        command=lambda: self.changeVideo(myVideoPlayer))
+        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
+                        command=lambda: master.switch_frame(DiagnosticsPage))
+        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
+                        command=lambda: self.changeVideo(myVideoPlayer))
+        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
+                        command=lambda: self.changeVideo(myVideoPlayer))
 
         btn_fullScreen.grid(row=0)
         btn_diagnostics.grid(row=1)
         btn_moreParameters.grid(row=2)
-        btn_settings.grid(row=3)
+        btn_settings.grid(row=3)        
 
-        video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
-        video_frame.grid(row=0, column=1) 
-
-        label_videoPannel = Label(video_frame)
-        label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
         label_videoPannel.grid(row=0)
         label_pressureText.grid(row=1)
 
-        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
-        myVideoPlayer.playVideo()
+        myVideoPlayer.play()
+
+    def changeVideo(self, videoPlayer):
+        videoPlayer.changeVideo() 
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):
@@ -84,10 +91,13 @@ class DiagnosticsPage(Frame):
         iconInput7.grid(row=6, column=1)
         iconInput8 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
         iconInput8.grid(row=7, column=1)
+        btn_back = Button(self, text="Back", height=4, width=6, font=font.Font(family="Segoe UI", size=8, weight='bold'), bg='#707070', fg='#F3E82F',
+                        command=lambda: master.switch_frame(StartPage))
+        btn_back.grid(row=8, column=1)
 
         iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
-        iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
-        iconsChange.changeIconsWithInputsLoop()
+       # iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
+        #iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":
     app = myApp()
