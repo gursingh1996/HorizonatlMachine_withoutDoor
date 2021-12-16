@@ -44,13 +44,13 @@ class StartPage(Frame):
         btn_frame.grid(row=0, column=0) 
         
         btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer))
+                        command=lambda: self.changeVideo(myVideoPlayer, 1))
         btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
                         command=lambda: master.switch_frame(DiagnosticsPage))
         btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer))
+                        command=lambda: self.changeVideo(myVideoPlayer, 2))
         btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer))
+                        command=lambda: self.changeVideo(myVideoPlayer, 2))
 
         btn_fullScreen.grid(row=0)
         btn_diagnostics.grid(row=1)
@@ -62,8 +62,8 @@ class StartPage(Frame):
 
         myVideoPlayer.play()
 
-    def changeVideo(self, videoPlayer):
-        videoPlayer.changeVideo() 
+    def changeVideo(self, videoPlayer, videoNumber):
+        videoPlayer.changeVideo(videoNumber) 
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):

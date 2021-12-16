@@ -1,5 +1,4 @@
 import tkinter as tk  # for Python3
-from tkvideo import tkvideo
 
 import threading
 from time import perf_counter, sleep
@@ -9,20 +8,22 @@ from PIL import Image, ImageTk
 class videoPlayer():
     def __init__(self, label, hz):
         self.hz = hz
-        self.path = "././Assets/Videos/BailPlateDown.mp4"
+        self.video1 = "././Assets/Videos/BailPlateDown.mp4"
+        self.video2 = "././Assets/Videos/video2.mp4"
         self.label = label
-        self.player = tkvideo(self.path, self.label, loop = 1)
         self.videoChange=False
+        self.videoNumber=1
 
     def playVideo(self):
         self.player.play()
 
-    def changeVideo(self):
-        self.path = "././Assets/Videos/video2.mp4"
+    def changeVideo(self, videoNumber):
+        self.videoNumber=videoNumber
         self.videoChange=True
 
     def load(self, label, hz):
-        frame_data = imageio.get_reader(self.path)
+        video1_frame_data = imageio.get_reader(self.video1)
+        video2_frame_data = imageio.get_reader(self.video2)
 
         if hz > 0:
             frame_duration = float(1 / hz)
@@ -31,6 +32,11 @@ class videoPlayer():
         
         while True:
             before = perf_counter()
+            if self.videoNumber==1:
+                frame_data = video1_frame_data
+            elif self.videoNumber==2:
+                frame_data = video2_frame_data
+
             for image in frame_data.iter_data():
                 if self.videoChange==True:
                     break
@@ -47,7 +53,6 @@ class videoPlayer():
                 before = perf_counter()
 
             if self.videoChange==True:
-                frame_data = imageio.get_reader(self.path)
                 self.videoChange=False
 
     def play(self):
