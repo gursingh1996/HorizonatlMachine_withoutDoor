@@ -6,60 +6,26 @@ import imageio
 from PIL import Image, ImageTk
 
 class videoPlayer():
-    def __init__(self, label, hz):
-        self.hz = hz
-        self.video1 = "././Assets/Videos/BailPlateDown.mp4"
-        self.video2 = "././Assets/Videos/video2.mp4"
+    def __init__(self, label):
         self.label = label
-        self.videoChange=False
-        self.videoNumber=1
+        self.photo1 = tk.PhotoImage(file="Assets/Videos/11.png")
+        self.photo2 = tk.PhotoImage(file="Assets/Videos/22.png")
+        self.photo3 = tk.PhotoImage(file="Assets/Videos/33.png")
+        self.photo4 = tk.PhotoImage(file="Assets/Videos/44.png")
+        self.frames = [self.photo1, self.photo2, self.photo3, self.photo4]
 
-    def playVideo(self):
-        self.player.play()
-
-    def changeVideo(self, videoNumber):
-        self.videoNumber=videoNumber
-        self.videoChange=True
-
-    def load(self, label, hz):
-        video1_frame_data = imageio.get_reader(self.video1)
-        video2_frame_data = imageio.get_reader(self.video2)
-
-        if hz > 0:
-            frame_duration = float(1 / hz)
-        else:
-            frame_duration = float(0)
-        
+    def load(self):
         while True:
-            before = perf_counter()
-            if self.videoNumber==1:
-                frame_data = video1_frame_data
-            elif self.videoNumber==2:
-                frame_data = video2_frame_data
-
-            for image in frame_data.iter_data():
-                if self.videoChange==True:
-                    break
-
-                frame_image = ImageTk.PhotoImage(Image.fromarray(image))
-                label.config(image=frame_image)
-                label.image = frame_image
-
-                diff = frame_duration + before
-                after = perf_counter()
-                diff = diff - after 
-                if diff > 0:
-                    sleep(diff)
-                before = perf_counter()
-
-            if self.videoChange==True:
-                self.videoChange=False
+            for i in range(4):
+                self.label.config(image=self.frames[i])
+                self.label.image = self.frames[i]
+                sleep(1)
 
     def play(self):
         """
             Creates and starts a thread as a daemon that plays the video by rapidly going through
             the video's frames.
         """
-        thread = threading.Thread(target=self.load, args=(self.label, self.hz))
+        thread = threading.Thread(target=self.load)
         thread.daemon = 1
         thread.start()

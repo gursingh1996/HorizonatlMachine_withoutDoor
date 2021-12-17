@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
+from PIL import Image, ImageTk
 #from Libraries.inputExpander import inputExpander
 
 #updateMachineInputs = inputExpander.inputExpander()
@@ -35,35 +36,30 @@ class StartPage(Frame):
         
         video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
         video_frame.grid(row=0, column=1) 
+        self.photo = PhotoImage(file="Assets/Videos/11.png")
         label_videoPannel = Label(video_frame)
+
         label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
-        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel, 0)   #use label as area to project video
+        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
 
 
         btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)
         btn_frame.grid(row=0, column=0) 
         
-        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer, 1))
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: master.switch_frame(DiagnosticsPage))
-        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer, 2))
-        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                        command=lambda: self.changeVideo(myVideoPlayer, 2))
+        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
 
         btn_fullScreen.grid(row=0)
         btn_diagnostics.grid(row=1)
         btn_moreParameters.grid(row=2)
         btn_settings.grid(row=3)        
-
+    
         label_videoPannel.grid(row=0)
         label_pressureText.grid(row=1)
 
         myVideoPlayer.play()
-
-    def changeVideo(self, videoPlayer, videoNumber):
-        videoPlayer.changeVideo(videoNumber) 
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):
