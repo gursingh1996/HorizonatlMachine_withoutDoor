@@ -13,6 +13,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
+        self.config(cursor="none")
         self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
