@@ -13,6 +13,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
+        self.geometry("100x180")
         #self.config(cursor="none")      #hide the cursor
         self.switch_frame(StartPage)
 
@@ -98,6 +99,7 @@ class DiagnosticsPage(Frame):
 
 if __name__ == "__main__":
     app = myApp()
-    app.geometry("1024x600")
+    app.geometry("800x480")
     app.config(bg=mainBackgroundColor)
+    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
