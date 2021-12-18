@@ -36,7 +36,6 @@ class StartPage(Frame):
         
         video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
         video_frame.grid(row=0, column=1) 
-        self.photo = PhotoImage(file="Assets/Frames/Default.png")
         label_videoPannel = Label(video_frame)
 
         label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
@@ -47,7 +46,8 @@ class StartPage(Frame):
         btn_frame.grid(row=0, column=0) 
         
         btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
+                            command=lambda:  master.switch_frame(DiagnosticsPage))
         btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
         btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
 
@@ -59,7 +59,7 @@ class StartPage(Frame):
         label_videoPannel.grid(row=0)
         label_pressureText.grid(row=1)
 
-        myVideoPlayer.play()
+        myVideoPlayer.play()    #creates a thread to play the video
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):
