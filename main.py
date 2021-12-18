@@ -36,7 +36,7 @@ class StartPage(Frame):
         
         video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
         video_frame.grid(row=0, column=1) 
-        self.photo = PhotoImage(file="Assets/Videos/11.png")
+        self.photo = PhotoImage(file="Assets/Frames/Default.png")
         label_videoPannel = Label(video_frame)
 
         label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
