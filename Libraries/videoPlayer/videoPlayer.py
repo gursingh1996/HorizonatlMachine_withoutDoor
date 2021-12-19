@@ -11,7 +11,7 @@ class videoPlayer():
 
     def load(self):
         while True:
-            for i in range(6):
+            for i in range(15):
                 fileLocation = "Assets/Frames/Upper-plate-down/" + str(i) + ".png"
                 self.frame = tk.PhotoImage(file=fileLocation)
                 self.label.config(image=self.frame)
