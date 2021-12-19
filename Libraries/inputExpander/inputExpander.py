@@ -3,62 +3,55 @@ import RPi.GPIO as GPIO
 from time import sleep
 from tkinter import *
 
-machineInputs = ['0']*8
+machineInputs = [0]*16
 
 class inputExpander():
-    CLKINH = 19
-    SH = 6
-    CLK = 13
-    DATA = 26
-    def __init__(self):
+    def __init__(self, CLKINH, SH, CLK, DATA):
+        self.CLKINH = CLKINH
+        self.SH = SH
+        self.CLK = CLK
+        self.DATA = DATA
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(inputExpander.CLKINH, GPIO.OUT)
-        GPIO.setup(inputExpander.SH, GPIO.OUT)
-        GPIO.setup(inputExpander.CLK, GPIO.OUT)
-        GPIO.setup(inputExpander.DATA,GPIO.IN)
+        GPIO.setup(self.CLKINH, GPIO.OUT)
+        GPIO.setup(self.SH, GPIO.OUT)
+        GPIO.setup(self.CLK, GPIO.OUT)
+        GPIO.setup(self.DATA,GPIO.IN)
 
-        GPIO.output(inputExpander.CLKINH, GPIO.HIGH)
-        GPIO.output(inputExpander.SH, GPIO.HIGH)
-        GPIO.output(inputExpander.CLK, GPIO.LOW)
+        GPIO.output(self.CLKINH, GPIO.HIGH)
+        GPIO.output(self.SH, GPIO.HIGH)
+        GPIO.output(self.CLK, GPIO.LOW)
         sleep(1)
 
-    def readDataThread(self):
-        tempInputs = ['0']*8
+    def __readInputsThread(self):
+        global machineInputs
         while True:
-            GPIO.output(inputExpander.SH, GPIO.LOW)
+            GPIO.output(self.SH, GPIO.LOW)
             sleep(0.001)
-            GPIO.output(inputExpander.SH, GPIO.HIGH)
+            GPIO.output(self.SH, GPIO.HIGH)
             sleep(0.001)
-            GPIO.output(inputExpander.CLKINH, GPIO.LOW)
+            GPIO.output(self.CLKINH, GPIO.LOW)
             sleep(0.001)
-            if GPIO.input(inputExpander.DATA):
-                print("1: 1")
-                tempInputs[0] = '1'
+            if GPIO.input(self.DATA):
+                machineInputs[0] = 1
             else:
-                print("1: 0")
-                tempInputs[0] = '0'
+                machineInputs[0] = 0
                 
-            for i in range(7):
-                GPIO.output(inputExpander.CLK, GPIO.HIGH)
+            for i in range(16):
+                GPIO.output(self.CLK, GPIO.HIGH)
                 sleep(0.001)
-                if GPIO.input(inputExpander.DATA):
-                    print(str(i+2)+": 1")
-                    tempInputs[i+1] = '1'
+                if GPIO.input(self.DATA):
+                    machineInputs[i+1] = 1
                 else:
-                    print(str(i+2)+": 0")
-                    tempInputs[i+1] = '0'
+                    machineInputs[i+1] = 0
                     
-                GPIO.output(inputExpander.CLK, GPIO.LOW)
+                GPIO.output(self.CLK, GPIO.LOW)
                 sleep(0.001)
                 
-            GPIO.output(inputExpander.CLKINH, GPIO.LOW)
-            global machineInputs
-            machineInputs = tempInputs
-            sleep(1)
-            print("Done")
+            GPIO.output(self.CLKINH, GPIO.LOW)
+            sleep(0.001)
 
-    def readDataLoop(self):
-        thread = threading.Thread(target=self.readDataThread)
+    def startReadingInputs(self):
+        thread = threading.Thread(target=self.__readInputsThread)
         thread.daemon = 1
         thread.start()
 
