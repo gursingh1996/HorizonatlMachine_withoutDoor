@@ -1,4 +1,5 @@
 from Libraries.inputExpander.inputExpander import *
+from Libraries.outputExpander import outputExpander
 
 #inputs
 limit_UPPER_PLATE_fordward = 0
@@ -27,10 +28,25 @@ inputExpander_CLKINH = 19
 inputExpander_SH = 6
 inputExpander_CLK = 13
 inputExpander_DATA = 26
+#not defined
+outputExpander_OE = 0
+outputExpander_SER = 0
+outputExpander_SRCLK = 0
+soutputExpanderelf_RCLK = 0
 
 def initIO():      #initialize inputs and outputs of the machine
+    GPIO.setwarnings(False)
     inputs = inputExpander(inputExpander_CLKINH, inputExpander_SH, inputExpander_CLK, inputExpander_DATA)
     inputs.startReadingInputs()     #start the thread
+    outputExpander.init_outputExpander(outputExpander_OE, outputExpander_SER, outputExpander_SRCLK, soutputExpanderelf_RCLK)
 
 def read(pin):
     return machineInputs[pin]       #return value as integer
+
+def high(pin):
+    outputExpander.machineOutputs[pin] = 1
+    outputExpander.writeOutputs()
+
+def low(pin):
+    outputExpander.machineOutputs[pin] = 0
+    outputExpander.writeOutputs()

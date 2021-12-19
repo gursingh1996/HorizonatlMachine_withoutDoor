@@ -1,3 +1,3 @@
-a = [0]*16
-
-print(a)
+a = 5
+if a:
+    print(not a)

@@ -20,7 +20,7 @@ class inputExpander():
         GPIO.output(self.CLKINH, GPIO.HIGH)
         GPIO.output(self.SH, GPIO.HIGH)
         GPIO.output(self.CLK, GPIO.LOW)
-        sleep(1)
+        sleep(0.001)
 
     def __readInputsThread(self):
         global machineInputs
@@ -36,7 +36,7 @@ class inputExpander():
             else:
                 machineInputs[0] = 0
                 
-            for i in range(16):
+            for i in range(15):
                 GPIO.output(self.CLK, GPIO.HIGH)
                 sleep(0.001)
                 if GPIO.input(self.DATA):

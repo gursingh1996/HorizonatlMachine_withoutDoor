@@ -2,10 +2,8 @@ from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
 from PIL import Image, ImageTk
-#from Libraries.inputExpander import inputExpander
-
-#updateMachineInputs = inputExpander.inputExpander()
-#updateMachineInputs.readDataLoop()
+from Libraries.Machine_operation import machine_operate
+#from Libraries.IO_definitions.IO_definitions import *
 
 mainBackgroundColor = '#000CA4'
 
@@ -13,7 +11,6 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        #self.config(cursor="none")      #hide the cursor
         self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
@@ -106,6 +103,8 @@ class DiagnosticsPage(Frame):
         #iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":
+    #initIO()
+    machine_operate.start_machineOperate_thread()
     app = myApp()
     app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
