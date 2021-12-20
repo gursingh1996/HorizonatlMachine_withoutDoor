@@ -1,10 +1,9 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-from Libraries.inputExpander import inputExpander
-
-updateMachineInputs = inputExpander.inputExpander()
-updateMachineInputs.readDataLoop()
+from PIL import Image, ImageTk
+#from Libraries.Machine_operation import machine_operate
+#from Libraries.IO_definitions.IO_definitions import *
 
 mainBackgroundColor = '#000CA4'
 
@@ -27,36 +26,47 @@ class StartPage(Frame):
 
         #variables
         btnHeight=6
-        btnWidth=12
+        btnWidth=27
         btnFont = font.Font(family="Segoe UI", size=8, weight='bold')
-        textFont = font.Font(family="Segoe UI", size=22, weight='bold')
         btnTextColor = '#707070'
         btnColor = '#F3E82F'
-
-        btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)
-        btn_frame.grid(row=0, column=0) 
         
-        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                                command=lambda: master.switch_frame(DiagnosticsPage))
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        upper_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor, pady=50)
+        btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)        #or the lower frame
+        values_frame = Frame(upper_frame, highlightbackground='green', highlightthickness=3, bg=mainBackgroundColor)    #inside upper frame on right side
+
+        upper_frame.grid(row=0, column=0) 
+        btn_frame.grid(row=1, column=0) 
+        
+        label_videoPannel = Label(upper_frame)
+        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
+
+        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
+                            command=lambda:  master.switch_frame(DiagnosticsPage))
         btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
         btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
+        
+        label_font = font.Font(family="Segoe UI", size=20, weight='bold')
+        label_voltage = Label(values_frame, text="Voltage = 220 V", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
+        label_current = Label(values_frame, text="Current = 16 A", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
+        label_pressure = Label(values_frame, text="Pressure = 2200 PSI", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
 
-        btn_fullScreen.grid(row=0)
-        btn_diagnostics.grid(row=1)
-        btn_moreParameters.grid(row=2)
-        btn_settings.grid(row=3)
+    #Inside upper frame
+        label_videoPannel.grid(row=0, column=0)     
+        values_frame.grid(row=0, column=1)
+        #inside values frame
+        label_voltage.grid(row=0, column=0, ipadx=51, ipady=10)
+        label_current.grid(row=1, column=0, ipadx=60, ipady=10)
+        label_pressure.grid(row=2, column=0, ipadx=27, ipady=10)
+    
+    #inside lower frame
+        btn_fullScreen.grid(row=0, column=0)
+        btn_diagnostics.grid(row=0, column=1)
+        btn_moreParameters.grid(row=0, column=2)
+        btn_settings.grid(row=0, column=3)        
 
-        video_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor)
-        video_frame.grid(row=0, column=1) 
-
-        label_videoPannel = Label(video_frame)
-        label_pressureText = Label(video_frame, font=textFont, text="PRESSURE: 2200 PSI", bg=mainBackgroundColor, fg='#ffffff')
-        label_videoPannel.grid(row=0)
-        label_pressureText.grid(row=1)
-
-        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
-        myVideoPlayer.playVideo()
+        myVideoPlayer.play()    #creates a thread to play the video
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):
@@ -84,13 +94,19 @@ class DiagnosticsPage(Frame):
         iconInput7.grid(row=6, column=1)
         iconInput8 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
         iconInput8.grid(row=7, column=1)
+        btn_back = Button(self, text="Back", height=4, width=6, font=font.Font(family="Segoe UI", size=8, weight='bold'), bg='#707070', fg='#F3E82F',
+                        command=lambda: master.switch_frame(StartPage))
+        btn_back.grid(row=8, column=1)
 
         iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
-        iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
-        iconsChange.changeIconsWithInputsLoop()
+       # iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
+        #iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":
+    #initIO()
+    #machine_operate.start_machineOperate_thread()
     app = myApp()
-    app.geometry("1024x600")
+    app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
+    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
