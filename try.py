@@ -1,3 +1,2 @@
-for i in range(5):
-    pass 
-print(i)
+a=1/0
+print(a)
