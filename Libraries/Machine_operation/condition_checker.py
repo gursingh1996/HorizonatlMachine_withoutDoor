@@ -1,11 +1,15 @@
-import warning
-import function_number
-import variables
+from . import warning
+from . import function_number
+from . import variables
 from Libraries.IO_definitions.IO_definitions import *
-import parameters
+from . import parameters
 
-def startingCondition():
-    if not read(limit_BAIL_PLATE_down):		#if bail plate is not down
+def startingCondition(conditionFor):
+    if conditionFor == function_number.GOTO_default: #for baling plate while going down so that lock doesnot interfere
+        if not read(limit_LOCK_out) and read(limit_LOWER_PLATE_back) and read(limit_UPPER_PLATE_back):  
+            return warning.lock_not_out
+
+    elif not read(limit_BAIL_PLATE_down):		#if bail plate is not down
         return warning.BAIL_PLATE_not_down
     
     elif not read(limit_LOWER_PLATE_back):

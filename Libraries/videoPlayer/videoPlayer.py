@@ -1,9 +1,7 @@
 import tkinter as tk  # for Python3
 
 import threading
-from time import perf_counter, sleep
-import imageio
-from PIL import Image, ImageTk
+from time import sleep
 
 class videoPlayer():
     def __init__(self, label):
@@ -16,7 +14,7 @@ class videoPlayer():
                 self.frame = tk.PhotoImage(file=fileLocation)
                 self.label.config(image=self.frame)
                 self.label.image = self.frame
-                sleep(0.3)
+                sleep(0.05)
 
     def play(self):
         """

@@ -8,3 +8,7 @@ LOWER_PLATE_forward = 56
 BALE_PLATE_up = 57
 
 UPPER_PLATE_press_budle	= 100
+LOWER_PLATE_press_budle = 101
+BALE_PLATE_bundle_up = 102
+GOTO_default = 103
+BALE_PLATE_bundle_down=104

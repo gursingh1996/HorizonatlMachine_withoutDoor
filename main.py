@@ -1,9 +1,8 @@
 from tkinter import *
 import tkinter.font as font
 from Libraries.videoPlayer import videoPlayer
-from PIL import Image, ImageTk
-#from Libraries.Machine_operation import machine_operate
-#from Libraries.IO_definitions.IO_definitions import *
+from Libraries.Machine_operation import machine_operate
+from Libraries.IO_definitions.IO_definitions import *
 
 mainBackgroundColor = '#000CA4'
 
@@ -103,8 +102,8 @@ class DiagnosticsPage(Frame):
         #iconsChange.changeIconsWithInputsLoop()
 
 if __name__ == "__main__":
-    #initIO()
-    #machine_operate.start_machineOperate_thread()
+    initIO()
+    machine_operate.start_machineOperate_thread()
     app = myApp()
     app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)

@@ -1,10 +1,10 @@
-import warning
-import function_number
-import parameters
-import variables
-from Libraries.IO_definitions.IO_definitions import *
-import motor_control
-import condition_checker
+from . import warning
+from . import function_number
+from . import parameters
+from . import variables
+from . import motor_control
+from . import condition_checker
+from ..IO_definitions.IO_definitions import *
 
 def bring_upper_plate_forward_and_apply_lock():
     if not read(limit_UPPER_PLATE_fordward):     #confirm that upper plate is not already down
@@ -213,16 +213,65 @@ def bring_bail_plate_down():
     return warning.all_ok
 
 
-def normalStart(startFrom):
-    go_on=0
-    if startFrom == function_number.UPPER_PLATE_press_budle:
-        retry=0
+def normalStart(doFunction):
+    if doFunction == function_number.UPPER_PLATE_press_budle:
         for retry in range(3):      #try pressing the bundle three times only
             condition = bring_upper_plate_forward_and_apply_lock()
             if condition==warning.reset_pressed:
-                stopped_with_reset=1
-                return function_number.UPPER_PLATE_press_budle
+                variables.stopped_with_reset=1
+                return doFunction
 
-            elif condition==warning.all_ok: pass      #go to next operation if this is success
+            elif condition==warning.all_ok: break      #break the for loop
+            elif condition==warning.upper_plate_forward_pressure_reached:
+                if retry<2:
+                    condition = bring_UPPER_PLATE_little_back()
+                    if condition==warning.reset_pressed:
+                        variables.stopped_with_reset=1
+                        return function_number.UPPER_PLATE_press_budle
+            
+        if retry==2: doFunction=function_number.GOTO_default
+        else: doFunction=function_number.LOWER_PLATE_press_budle
+#next function
+    if doFunction==function_number.LOWER_PLATE_press_budle:
+        condition = bring_lower_plate_forward()
+        if condition == warning.reset_pressed:
+            variables.stopped_with_reset=1
+            return doFunction
+        
+        else: doFunction=function_number.GOTO_default
+#next function
+    if doFunction==function_number.GOTO_default:
+        default_position_return()
+        if condition == warning.reset_pressed:
+            variables.stopped_with_reset=1
+            return doFunction
+        
+        else: doFunction=function_number.BALE_PLATE_bundle_up
+#next function
+    if doFunction==function_number.BALE_PLATE_bundle_up:
+        condition = bring_bail_plate_up()
+        if condition == warning.reset_pressed:
+            variables.stopped_with_reset=1
+            return doFunction
+#this next function will only work if reset was pressed during the bale plate was going down
+#and then start button is pressed
+    if doFunction==function_number.BALE_PLATE_bring_down:
+        condition = bring_bail_plate_down()
+        if condition == warning.reset_pressed:
+            variables.stopped_with_reset=1
+            return doFunction
+    
+    variables.stopped_with_reset=0
+    return function_number.UPPER_PLATE_press_budle
 
 
+def default_position_return():
+    #check lock condition for bale plate down
+    if condition_checker.startingCondition(function_number.GOTO_default) == warning.lock_not_out:
+        fault = bring_lock_out()
+        if fault == warning.reset_pressed: return fault
+
+    movements = [bring_bail_plate_down(), bring_lower_plate_back(), bring_lock_out(), bring_upper_plate_back()]
+    for i in range(4):
+        fault = movements[i]
+        if fault == warning.reset_pressed: return fault

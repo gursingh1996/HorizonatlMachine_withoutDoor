@@ -1,3 +1,3 @@
-a = 5
-if a:
-    print(not a)
+for i in range(5):
+    pass 
+print(i)
