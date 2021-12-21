@@ -6,10 +6,8 @@ def machineOperate():
     while(1):
         readButtons.start()
         readButtons.bail_plate_down()
-        print("Thread started")
-        time.sleep(1)
 
-def start_machineOperate_thread(self):
+def start_machineOperate_thread():
         thread = threading.Thread(target=machineOperate)
         thread.daemon = 1
         thread.start()
