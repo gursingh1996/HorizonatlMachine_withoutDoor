@@ -25,7 +25,7 @@ class StartPage(Frame):
 
         #variables
         btnHeight=6
-        btnWidth=27
+        btnWidth=22
         btnFont = font.Font(family="Segoe UI", size=8, weight='bold')
         btnTextColor = '#707070'
         btnColor = '#F3E82F'
@@ -49,15 +49,15 @@ class StartPage(Frame):
         label_font = font.Font(family="Segoe UI", size=20, weight='bold')
         label_voltage = Label(values_frame, text="Voltage = 220 V", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
         label_current = Label(values_frame, text="Current = 16 A", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
-        label_pressure = Label(values_frame, text="Pressure = 2200 PSI", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
+        label_pressure = Label(values_frame, text="Pressure = 2200 PS", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
 
     #Inside upper frame
         label_videoPannel.grid(row=0, column=0)     
         values_frame.grid(row=0, column=1)
         #inside values frame
-        label_voltage.grid(row=0, column=0, ipadx=51, ipady=10)
-        label_current.grid(row=1, column=0, ipadx=60, ipady=10)
-        label_pressure.grid(row=2, column=0, ipadx=27, ipady=10)
+        label_voltage.grid(row=0, column=0, ipadx=0, ipady=0)
+        label_current.grid(row=1, column=0, ipadx=0, ipady=10)
+        label_pressure.grid(row=2, column=0, ipadx=0, ipady=10)
     
     #inside lower frame
         btn_fullScreen.grid(row=0, column=0)
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     #initIO()
     #machine_operate.start_machineOperate_thread()
     app = myApp()
-    app.geometry("800x480")     #resolution of the screen being used
+    app.geometry("665x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
     #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
