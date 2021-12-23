@@ -1,10 +1,11 @@
 from tkinter import *
 import tkinter.font as font
+from typing import ParamSpec
 from Libraries.videoPlayer import videoPlayer
 #from Libraries.Machine_operation import machine_operate
 #from Libraries.IO_definitions.IO_definitions import *
 
-mainBackgroundColor = '#000CA4'
+mainBackgroundColor = '#B1B1B1'
 
 class myApp(Tk):
     def __init__(self):
@@ -23,49 +24,105 @@ class StartPage(Frame):
     def __init__(self, master):
         Frame.__init__(self, master, bg=mainBackgroundColor)      
 
-        #variables
-        btnHeight=6
-        btnWidth=22
-        btnFont = font.Font(family="Segoe UI", size=8, weight='bold')
-        btnTextColor = '#707070'
-        btnColor = '#F3E82F'
-        
-        upper_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor, pady=50)
-        btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)        #or the lower frame
-        values_frame = Frame(upper_frame, highlightbackground='green', highlightthickness=3, bg=mainBackgroundColor)    #inside upper frame on right side
+        topFrameBgColor = "#F6F6F6"
+        topFrame = Frame(self, background=topFrameBgColor)
+        middleUpperFrame = Frame(self, background=mainBackgroundColor)
+        middleLowerFrame = Frame(self, height=45, width=652, background=mainBackgroundColor)
+        bottomFrame = Frame(self)
 
-        upper_frame.grid(row=0, column=0) 
-        btn_frame.grid(row=1, column=0) 
-        
-        label_videoPannel = Label(upper_frame)
-        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
+        topFrame.grid(row=0, column=0)
+        middleUpperFrame.grid(row=1, column=0, pady=(16,0))
+        middleLowerFrame.grid_propagate(0)          #donot change size of frame when its content is changed
+        middleLowerFrame.grid(row=2, column=0, padx=(0,17), pady=(16,0))       #0,17
+        bottomFrame.grid(row=3, column=0)
 
-        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                            command=lambda:  master.switch_frame(DiagnosticsPage))
-        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        
-        label_font = font.Font(family="Segoe UI", size=20, weight='bold')
-        label_voltage = Label(values_frame, text="Voltage = 220 V", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
-        label_current = Label(values_frame, text="Current = 16 A", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
-        label_pressure = Label(values_frame, text="Pressure = 2200 PS", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
+        self.logoImg = PhotoImage(file="Assets/Icons/logo.png")
+        logoLabel = Label(topFrame, image=self.logoImg, background=topFrameBgColor)
+        machineNameFont = font.Font(family="Segoe UI", size=28, weight='bold')
+        machineNameLabel = Label(topFrame, text="HMU-3000", font=machineNameFont, fg="#6B6B6B", background=topFrameBgColor)
+        dateAndTimeFrame = Frame(topFrame, background=topFrameBgColor)
+        dateTimeFont = font.Font(family="Segoe UI", size=10, weight='bold')
+        dateLabel = Label(dateAndTimeFrame, text="25-Dec-2021", background=topFrameBgColor, font=dateTimeFont, fg="#6B6B6B")
+        timeLabel = Label(dateAndTimeFrame, text="02:30 p.m.", background=topFrameBgColor, font=dateTimeFont, fg="#6B6B6B")
 
-    #Inside upper frame
-        label_videoPannel.grid(row=0, column=0)     
-        values_frame.grid(row=0, column=1)
-        #inside values frame
-        label_voltage.grid(row=0, column=0, ipadx=0, ipady=0)
-        label_current.grid(row=1, column=0, ipadx=0, ipady=10)
-        label_pressure.grid(row=2, column=0, ipadx=0, ipady=10)
-    
-    #inside lower frame
-        btn_fullScreen.grid(row=0, column=0)
-        btn_diagnostics.grid(row=0, column=1)
-        btn_moreParameters.grid(row=0, column=2)
-        btn_settings.grid(row=0, column=3)        
+        logoLabel.grid(row=0, column=0, padx=(20,0))
+        machineNameLabel.grid(row=0, column=1, padx=(125,128), pady=(6,6))
+        dateAndTimeFrame.grid(row=0, column=2, padx=(0,10))
+        dateLabel.grid(row=0, column=0)
+        timeLabel.grid(row=1, column=0, padx=(7,0))
 
+        videLabel = Label(middleUpperFrame, bd=0)
+        myVideoPlayer = videoPlayer.videoPlayer(videLabel)   #use label as area to project video
         myVideoPlayer.play()    #creates a thread to play the video
+        
+        sensorDisplayFrameBgColor = "#EEEEEE"
+        sensorDisplayFrame = Frame(middleUpperFrame, background=sensorDisplayFrameBgColor)
+        sensorDisplayUpperTextFont = font.Font(family="Segoe UI", size=14, weight='bold')
+        sensorDisplayTextColor = "#515151"
+        sensorDisplayUnitTextFont = font.Font(family="Segoe UI", size=12, weight='bold')
+
+        pressureFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
+        pressureText = Label(pressureFrame, text="Pressure:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
+        pressureText.grid(row=0, column=0)
+        pressureValueFrame = Frame(pressureFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=29, width=190)
+        pressureValueFrame.grid(row=1, columnspan=8, padx=(6,0))
+        pressureUnitText = Label(pressureFrame, text="PSI", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
+        pressureUnitText.grid(row=1, column=9, padx=(3,3))
+        pressureFrame.grid(row=0, column=0, pady=(8,0))
+
+        voltageFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
+        voltageText = Label(voltageFrame, text="Voltage:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
+        voltageText.grid(row=0, column=0)
+        voltageValueFrame = Frame(voltageFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=190)
+        voltageValueFrame.grid(row=1, columnspan=8, padx=(6,0))
+        voltageUnitText = Label(voltageFrame, text="V", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
+        voltageUnitText.grid(row=1, column=9, padx=(3,15))
+        voltageFrame.grid(row=1, column=0)
+
+        currentFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
+        currentText = Label(currentFrame, text="Motor Current:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
+        currentText.grid(row=0, column=0)
+        currentValueFrame = Frame(currentFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=190)
+        currentValueFrame.grid(row=1, columnspan=8, padx=(6,0))
+        currentUnitText = Label(currentFrame, text="A", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
+        currentUnitText.grid(row=1, column=9, padx=(3,15))
+        currentFrame.grid(row=2, column=0)
+
+        tempFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
+        tempText = Label(tempFrame, text="Oil Temprature:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
+        tempText.grid(row=0, column=0)
+        tempValueFrame = Frame(tempFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=190)
+        tempValueFrame.grid_propagate(0)
+        tempValueFrame.grid(row=1, columnspan=8, padx=(6,0))
+        tempUnitText = Label(tempFrame, text="°C", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
+        tempUnitText.grid(row=1, column=9, padx=(3,15))
+        tempFrame.grid(row=3, column=0, pady=(0,28))
+
+        videLabel.grid(row=0, column=0, padx=(0,16))
+        sensorDisplayFrame.grid(row=0, column=1, padx=(0,17))
+
+        middleLowerFrameFont = font.Font(family="Segoe UI", size=12, weight='bold')
+        runTimeText = Label(middleLowerFrame, text="Run Time: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        runTimeText.grid(row=0, column=0)
+        runTimeValue = Label(middleLowerFrame, text="1h 20m", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        runTimeValue.grid(row=0, column=1)
+
+        bundleCountText = Label(middleLowerFrame, text="Bundle Count: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        bundleCountText.grid(row=0, column=2, padx=(355,0))
+        bundleCountValue = Label(middleLowerFrame, text="100", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        bundleCountValue.grid(row=0, column=3)
+
+        btnFont = font.Font(family="Segoe UI", size=11, weight='bold')
+        btnWidth = 17
+        btnDiagnostics = Button(bottomFrame, text="DIAGNOSTICS", height=2, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnDiagnostics.grid(row=0, column=0)
+        btnWarnings = Button(bottomFrame, text="WARNINGS", height=2, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnWarnings.grid(row=0, column=1)
+        btnErrors = Button(bottomFrame, text="ERRORS", height=2, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnErrors.grid(row=0, column=2)
+        btnSettings = Button(bottomFrame, text="SETTINGS", height=2, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnSettings.grid(row=0, column=3)
+
 
 class DiagnosticsPage(Frame):
     def __init__(self, master):
