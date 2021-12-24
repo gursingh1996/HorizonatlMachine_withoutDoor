@@ -1,0 +1,7 @@
+if pass doesnot work:
+
+1. go to settings of your account
+2. select developer options 
+3. select personal access tokens 
+4. generate new
+5. use it as pasword during push command
