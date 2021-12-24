@@ -175,7 +175,7 @@ if __name__ == "__main__":
     #initIO()
     #machine_operate.start_machineOperate_thread()
     app = myApp()
-    app.geometry("665x480")     #resolution of the screen being used
+    app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
