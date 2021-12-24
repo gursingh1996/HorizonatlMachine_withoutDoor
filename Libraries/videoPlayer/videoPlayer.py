@@ -36,7 +36,7 @@ class videoPlayer():
                     sleep(0.05)
                 
             else:
-                for i in range(15):
+                for i in range(16):
                     if videoPlayer.last_video_number != video_number:
                         videoPlayer.last_video_number = video_number
                         break
