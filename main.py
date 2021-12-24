@@ -127,13 +127,13 @@ class StartPage(Frame):
         btnFont = font.Font(family="Segoe UI", size=11, weight='bold')
         btnWidth = 15
         btnHeight = 3
-        btnDiagnostics = Button(bottomFrame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnDiagnostics.grid(row=0, column=0)
-        btnWarnings = Button(bottomFrame, text="WARNINGS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnWarnings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="WARNINGS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnWarnings.grid(row=0, column=1)
-        btnErrors = Button(bottomFrame, text="ERRORS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnErrors = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="ERRORS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnErrors.grid(row=0, column=2)
-        btnSettings = Button(bottomFrame, text="SETTINGS", height=btnHeight, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnSettings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="SETTINGS", height=btnHeight, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnSettings.grid(row=0, column=3)
 
 
