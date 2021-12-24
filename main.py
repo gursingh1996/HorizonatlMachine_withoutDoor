@@ -26,7 +26,7 @@ class StartPage(Frame):
         topFrameBgColor = "#F6F6F6"
         topFrame = Frame(self, background=topFrameBgColor)
         middleUpperFrame = Frame(self, background=mainBackgroundColor)
-        middleLowerFrame = Frame(self, height=42, width=700, background=mainBackgroundColor)
+        middleLowerFrame = Frame(self, height=45, width=700, background=mainBackgroundColor)
         bottomFrame = Frame(self)
 
         topFrame.grid(row=0, column=0)
@@ -59,59 +59,59 @@ class StartPage(Frame):
         sensorDisplayUpperTextFont = font.Font(family="Segoe UI", size=14, weight='bold')
         sensorDisplayTextColor = "#515151"
         sensorDisplayUnitTextFont = font.Font(family="Segoe UI", size=12, weight='bold')
-        sensorDisplayValueTextFont = font.Font(family="Segoe UI", size=12, weight='bold')
+        sensorDisplayValueTextFont = font.Font(family="Segoe UI", size=17, weight='bold')
 
         pressureFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
         pressureText = Label(pressureFrame, background=sensorDisplayFrameBgColor, text="Pressure:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
         pressureText.grid(row=0, column=0, padx=(5,0))
-        pressureValueFrame = Frame(pressureFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=29, width=220)
+        pressureValueFrame = Frame(pressureFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
         pressureValueFrame.grid(row=1, columnspan=8, padx=(10,0))
         pressureValueFrame.grid_propagate(0)
-        pressureValueText = Label(pressureValueFrame, text="2200", fg="black", font=sensorDisplayValueTextFont, width=19, background="#ffffff")
+        pressureValueText = Label(pressureValueFrame, text="2200", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
         pressureValueText.grid(pady=(3,0))
         pressureUnitText = Label(pressureFrame, background=sensorDisplayFrameBgColor, text="PSI", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
         pressureUnitText.grid(row=1, column=9, padx=(3,3))
-        pressureFrame.grid(row=0, column=0, pady=(14,0), padx=(2,8))
+        pressureFrame.grid(row=0, column=0, pady=(19,0), padx=(2,8))
 
         voltageFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
         voltageText = Label(voltageFrame, background=sensorDisplayFrameBgColor, text="Voltage:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
         voltageText.grid(row=0, column=0)
-        voltageValueFrame = Frame(voltageFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=220)
+        voltageValueFrame = Frame(voltageFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
         voltageValueFrame.grid(row=1, columnspan=8, padx=(6,0))
         voltageValueFrame.grid_propagate(0)
-        voltageValueText = Label(voltageValueFrame, text="220", fg="black", font=sensorDisplayValueTextFont, width=19, background="#ffffff")
+        voltageValueText = Label(voltageValueFrame, text="220", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
         voltageValueText.grid(pady=(3,0))
         voltageUnitText = Label(voltageFrame, background=sensorDisplayFrameBgColor, text="V", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
         voltageUnitText.grid(row=1, column=9, padx=(3,15))
-        voltageFrame.grid(row=1, column=0, pady=(5,0), padx=(2,8))
+        voltageFrame.grid(row=1, column=0, pady=(11,0), padx=(2,8))
 
         currentFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
         currentText = Label(currentFrame, background=sensorDisplayFrameBgColor, text="Motor Current:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
         currentText.grid(row=0, column=0, padx=(5,0))
-        currentValueFrame = Frame(currentFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=220)
+        currentValueFrame = Frame(currentFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
         currentValueFrame.grid(row=1, columnspan=8, padx=(6,0))
         currentValueFrame.grid_propagate(0)
-        currentValueText = Label(currentValueFrame, text="20", fg="black", font=sensorDisplayValueTextFont, width=19, background="#ffffff")
+        currentValueText = Label(currentValueFrame, text="20", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
         currentValueText.grid(pady=(3,0))
         currentUnitText = Label(currentFrame, background=sensorDisplayFrameBgColor, text="A", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
         currentUnitText.grid(row=1, column=9, padx=(3,15))
-        currentFrame.grid(row=2, column=0, pady=(5,0), padx=(2,8))
+        currentFrame.grid(row=2, column=0, pady=(11,0), padx=(2,8))
 
         tempFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
         tempText = Label(tempFrame, background=sensorDisplayFrameBgColor, text="Oil Temprature:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
         tempText.grid(row=0, column=0, padx=(9,0))
-        tempValueFrame = Frame(tempFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=30, width=220)
+        tempValueFrame = Frame(tempFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
         tempValueFrame.grid_propagate(0)
         tempValueFrame.grid(row=1, columnspan=8, padx=(10,0))
         tempValueFrame.grid_propagate(0)
-        tempValueText = Label(tempValueFrame, text="45", fg="black", font=sensorDisplayValueTextFont, width=19, background="#ffffff")
+        tempValueText = Label(tempValueFrame, text="45", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
         tempValueText.grid(pady=(3,0))
         tempUnitText = Label(tempFrame, background=sensorDisplayFrameBgColor, text="°C", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
         tempUnitText.grid(row=1, column=9, padx=(3,15))
-        tempFrame.grid(row=3, column=0, pady=(5,24), padx=(2,8))
+        tempFrame.grid(row=3, column=0, pady=(11,30), padx=(2,8))
 
-        videLabel.grid(row=0, column=0, padx=(0,21))
-        sensorDisplayFrame.grid(row=0, column=1, padx=(0,19))
+        videLabel.grid(row=0, column=0, padx=(0,20))
+        sensorDisplayFrame.grid(row=0, column=1, padx=(0,20))
 
         middleLowerFrameFont = font.Font(family="Segoe UI", size=12, weight='bold')
         runTimeText = Label(middleLowerFrame, text="Run Time: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
@@ -126,7 +126,7 @@ class StartPage(Frame):
 
         btnFont = font.Font(family="Segoe UI", size=11, weight='bold')
         btnWidth = 15
-        btnHeight = 3
+        btnHeight = 4
         btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnDiagnostics.grid(row=0, column=0)
         btnWarnings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="WARNINGS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
@@ -177,5 +177,5 @@ if __name__ == "__main__":
     app = myApp()
     app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
