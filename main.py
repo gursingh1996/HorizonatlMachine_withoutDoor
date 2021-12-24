@@ -164,5 +164,5 @@ if __name__ == "__main__":
     app = myApp()
     app.geometry("665x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
