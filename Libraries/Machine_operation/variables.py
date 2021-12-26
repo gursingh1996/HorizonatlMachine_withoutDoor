@@ -6,4 +6,4 @@ starting_pos = function_number.UPPER_PLATE_press_budle
 
 pressureSense=1000
 
-video_number=1
+video_number=6

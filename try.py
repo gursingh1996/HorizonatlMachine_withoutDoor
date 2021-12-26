@@ -1,43 +1,43 @@
-#variables
-        btnHeight=6
-        btnWidth=22
-        btnFont = font.Font(family="Segoe UI", size=8, weight='bold')
-        btnTextColor = '#707070'
-        btnColor = '#F3E82F'
-        
-        upper_frame = Frame(self, highlightbackground='yellow', highlightthickness=3, bg=mainBackgroundColor, pady=50)
-        btn_frame = Frame(self, highlightbackground='red', highlightthickness=3)        #or the lower frame
-        values_frame = Frame(upper_frame, highlightbackground='green', highlightthickness=3, bg=mainBackgroundColor)    #inside upper frame on right side
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-        upper_frame.grid(row=0, column=0) 
-        btn_frame.grid(row=1, column=0) 
-        
-        label_videoPannel = Label(upper_frame)
-        myVideoPlayer = videoPlayer.videoPlayer(label_videoPannel)   #use label as area to project video
+import tkinter as tk
+import tkinter.ttk as ttk
 
-        btn_fullScreen = Button(btn_frame, text="FULL SCREEN\nVIEW", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_diagnostics = Button(btn_frame, text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor,
-                            command=lambda:  master.switch_frame(DiagnosticsPage))
-        btn_moreParameters = Button(btn_frame, text="MORE\nPARAMETERS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        btn_settings = Button(btn_frame, text="SETTINGS", height=btnHeight, width=btnWidth, font=btnFont, bg=btnColor, fg=btnTextColor)
-        
-        label_font = font.Font(family="Segoe UI", size=20, weight='bold')
-        label_voltage = Label(values_frame, text="Voltage = 220 V", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
-        label_current = Label(values_frame, text="Current = 16 A", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
-        label_pressure = Label(values_frame, text="Pressure = 2200 PS", font=label_font, bg=mainBackgroundColor, fg='#ffffff', anchor="w")
+class App(ttk.Frame):
 
-    #Inside upper frame
-        label_videoPannel.grid(row=0, column=0)     
-        values_frame.grid(row=0, column=1)
-        #inside values frame
-        label_voltage.grid(row=0, column=0, ipadx=0, ipady=0)
-        label_current.grid(row=1, column=0, ipadx=0, ipady=10)
-        label_pressure.grid(row=2, column=0, ipadx=0, ipady=10)
-    
-    #inside lower frame
-        btn_fullScreen.grid(row=0, column=0)
-        btn_diagnostics.grid(row=0, column=1)
-        btn_moreParameters.grid(row=0, column=2)
-        btn_settings.grid(row=0, column=3)        
+    def __init__(self, parent=None, *args, **kwargs):
+        ttk.Frame.__init__(self, parent)
+        self.parent = parent
 
-        myVideoPlayer.play()    #creates a thread to play the video
+        # Create Treeview 
+        self.tree = ttk.Treeview(self, column=('A','B'), selectmode='none', height=7)
+        self.tree.grid(row=0, column=0, sticky='nsew')
+
+        # Setup column heading
+        self.tree.heading('#0', text=' Pic directory', anchor='center')
+        self.tree.heading('#1', text=' A', anchor='center')
+        self.tree.heading('#2', text=' B', anchor='center')
+        # #0, #01, #02 denotes the 0, 1st, 2nd columns
+
+        # Setup column
+        self.tree.column('A', anchor='center', width=100)
+        self.tree.column('B', anchor='center', width=100)
+
+        # Insert image to #0 
+        self._img = tk.PhotoImage(file="Assets/Icons/InputUnpressed.png") #change to your file path
+        self.tree.insert('', 'end', text="#0's text", image=self._img,
+                         value=("A's value", self._img))
+
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.geometry('450x180+300+300')
+
+    app = App(root)
+    app.grid(row=0, column=0, sticky='nsew')
+
+    root.rowconfigure(0, weight=1)
+    root.columnconfigure(0, weight=1)
+
+    root.mainloop()

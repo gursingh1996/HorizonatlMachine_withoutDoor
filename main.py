@@ -10,7 +10,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(StartPage)
+        self.switch_frame(DiagnosticsPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -127,7 +127,7 @@ class StartPage(Frame):
         btnFont = font.Font(family="Segoe UI", size=11, weight='bold')
         btnWidth = 15
         btnHeight = 4
-        btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(DiagnosticsPage))
         btnDiagnostics.grid(row=0, column=0)
         btnWarnings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="WARNINGS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnWarnings.grid(row=0, column=1)
@@ -140,34 +140,60 @@ class StartPage(Frame):
 class DiagnosticsPage(Frame):
     def __init__(self, master):
         Frame.__init__(self, master, bg=mainBackgroundColor)
-        textFont = font.Font(family="Segoe UI", size=22, weight='bold')
-        for i in range(8):
-            Label(self, text="Input "+str(i+1)+": ", font=textFont, bg=mainBackgroundColor, fg='#ffffff').grid(row=i, column=0)  
         
-        self.icon_btnUnpressed = PhotoImage(file="Assets/Icons/InputUnpressed.png")
-        self.icon_btnPressed = PhotoImage(file="Assets/Icons/InputPressed.png")
+        topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
+        topFrame.grid(row=0, column=0)
+        topFrame.grid_propagate(0)
+        Button(topFrame, height=1, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(15,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=26, weight='bold')).grid(row=0, column=1, padx=(130,0), pady=(11,0))
+        middleFrame = Frame(self, background="#FCFCFC", height=383, width=691, highlightbackground='#000000', highlightthickness=1)
+        middleFrame.grid(row=1, column=0, padx=(10,10))
+        middleFrame.grid_propagate(0)
 
-        iconInput1 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput1.grid(row=0, column=1)
-        iconInput2 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput2.grid(row=1, column=1)
-        iconInput3 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput3.grid(row=2, column=1)
-        iconInput4 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput4.grid(row=3, column=1)
-        iconInput5 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput5.grid(row=4, column=1)
-        iconInput6 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput6.grid(row=5, column=1)
-        iconInput7 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput7.grid(row=6, column=1)
-        iconInput8 = Label(self, image=self.icon_btnUnpressed, bg=mainBackgroundColor)
-        iconInput8.grid(row=7, column=1)
-        btn_back = Button(self, text="Back", height=4, width=6, font=font.Font(family="Segoe UI", size=8, weight='bold'), bg='#707070', fg='#F3E82F',
-                        command=lambda: master.switch_frame(StartPage))
-        btn_back.grid(row=8, column=1)
+        headingFrame = Frame(middleFrame)
+        headingFrame.grid(row=0, column=0)
+        Label(headingFrame, text="INPUT NUMBER", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=5)
+        Label(headingFrame, text="NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=190)
+        Label(headingFrame, text="STATUS", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=37)
 
-        iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
+        detailsCanvas = Canvas(middleFrame, height=330, width=665, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas.grid(row=1, column=0, pady=(20,0))
+        detailsScroll = Scrollbar(middleFrame, orient=VERTICAL, command=detailsCanvas.yview)
+        detailsScroll.grid(row=1, column=1, sticky=NS)
+        detailsCanvas.config(yscrollcommand=detailsScroll.set)
+        detailsCanvas.bind("<Configure>", lambda e: detailsCanvas.configure(scrollregion=detailsCanvas.bbox("all")))
+        detailsFrame = Frame(detailsCanvas, background="#FCFCFC")
+        detailsCanvas.create_window((0,0), window=detailsFrame, anchor="nw")
+
+        displayInputs=[
+            "LIMIT - UPPER PLATE DOWN",
+            "LIMIT - UPPER PLATE UP",
+            "LIMIT - LOCK APPLIED",
+            "LIMIT - LOCK NOT APPLIED",
+            "LIMIT - LOWER PLATE FORWARD",
+            "LIMIT - LOWER PLATE BACKWARD",
+            "LIMIT - BALE OUT PLATE UP",
+            "LIMIT - BALE OUT PLATE DOWN",
+            "BUTTON - START",
+            "BUTTON - STOP",
+            "BUTTON - BALE OUT PLATE DOWN"
+        ]
+        self.iconPressed = PhotoImage(file="Assets/Icons/InputBtnPressed.png")
+        iconInputsLabel = [0]*11
+        for i in range(11):
+            Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=14, weight='bold')).grid(row=i, column=0, padx=(43,43))
+            Label(detailsFrame, text=displayInputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=14, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w", padx=(0,145))
+            iconInputsLabel[i] = Label(detailsFrame, background="#FCFCFC", image=self.iconPressed)
+            iconInputsLabel[i].grid(row=i, column=3)
+
+        lowerFrame = Frame(self)
+        lowerFrame.grid(row=2, column=0)
+        btnInputs = Button(lowerFrame, activebackground="#01FFBA", activeforeground="#4B4B4B", height=1, width=10, text="INPUTS", background="#01FFBA", fg="#4B4B4B", font=font.Font(family="Malgun Gothic", size=12, weight='bold'))
+        btnInputs.grid(row=0, column=0)
+        btnOutputs = Button(lowerFrame, activebackground="#F8F8F8", activeforeground="#4B4B4B", height=1, width=10, text="OUTPUTS", background="#F8F8F8", fg="#4B4B4B", font=font.Font(family="Malgun Gothic", size=12, weight='bold'))
+        btnOutputs.grid(row=0, column=1)
+
+        # iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
        # iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
         #iconsChange.changeIconsWithInputsLoop()
 
@@ -175,7 +201,7 @@ if __name__ == "__main__":
     #initIO()
     #machine_operate.start_machineOperate_thread()
     app = myApp()
-    app.geometry("800x480")     #resolution of the screen being used
+    app.geometry("720x500")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    # app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
