@@ -133,7 +133,7 @@ class StartPage(Frame):
         btnWarnings.grid(row=0, column=1)
         btnErrors = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="ERRORS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
         btnErrors.grid(row=0, column=2)
-        btnSettings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="SETTINGS", height=btnHeight, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnSettings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="PARAMETERS", height=btnHeight, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(ParametersPage))
         btnSettings.grid(row=0, column=3)
 
 class DiagnosticsInputsPage(Frame):
@@ -144,7 +144,7 @@ class DiagnosticsInputsPage(Frame):
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
         Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=26, weight='bold')).grid(row=0, column=1, padx=(130,0), pady=(11,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
         middleFrame.grid_propagate(0)
@@ -204,7 +204,7 @@ class DiagnosticsOutputsPage(Frame):
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
         Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=26, weight='bold')).grid(row=0, column=1, padx=(130,0), pady=(11,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
         middleFrame.grid_propagate(0)
@@ -262,7 +262,7 @@ class ParametersPage(Frame):
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
         Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=26, weight='bold')).grid(row=0, column=1, padx=(130,0), pady=(11,0))
+        Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=496, width=720, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0)
         middleFrame.grid_propagate(0)
@@ -275,7 +275,7 @@ class ParametersPage(Frame):
 
         middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
         middleLowerFrame.grid(row=1, column=0)
-        detailsCanvas = Canvas(middleLowerFrame, height=390, width=700, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas = Canvas(middleLowerFrame, height=390, width=685, background="#FCFCFC", highlightthickness=0)
         detailsCanvas.grid(row=0, column=0, pady=(16,0))
         detailsScroll = Scrollbar(middleLowerFrame, orient=VERTICAL, command=detailsCanvas.yview)
         detailsScroll.grid(row=0, column=1, sticky=NS)
@@ -293,12 +293,15 @@ class ParametersPage(Frame):
 
         for i in range(2):
             Label(detailsFrame, text=parameterList[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=0, padx=(10,0), sticky="w")
-            Label(detailsFrame, height=11, width=40, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(50,0))
-            Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=1, padx=(50,0))
+            labelPadLeft=125
+            Label(detailsFrame, height=11, width=100, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(labelPadLeft,0))
+            Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=i, column=1, padx=(labelPadLeft,0))
 
-        btnPadding=45
+        btnPadLeft=30
         btn0 = Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'))
-        btn0.grid(row=0, column=2, padx=(btnPadding,0))
+        btn0.grid(row=0, column=2, padx=(btnPadLeft,0))
+        btn1 = Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'))
+        btn1.grid(row=1, column=2, padx=(btnPadLeft,0))
 
 if __name__ == "__main__":
     #initIO()
