@@ -10,7 +10,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(StartPage)
+        self.switch_frame(ParametersPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -253,6 +253,52 @@ class DiagnosticsOutputsPage(Frame):
         # iconInputs = [iconInput1, iconInput2, iconInput3, iconInput4, iconInput5, iconInput6, iconInput7, iconInput8]
        # iconsChange = inputExpander.InputIconsDisplay(iconInputs, self.icon_btnUnpressed, self.icon_btnPressed)
         #iconsChange.changeIconsWithInputsLoop()
+
+class ParametersPage(Frame):
+    def __init__(self, master):
+        Frame.__init__(self, master, bg=mainBackgroundColor)
+        
+        topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
+        topFrame.grid(row=0, column=0)
+        topFrame.grid_propagate(0)
+        Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=26, weight='bold')).grid(row=0, column=1, padx=(130,0), pady=(11,0))
+        middleFrame = Frame(self, background="#FCFCFC", height=496, width=720, highlightbackground='#000000', highlightthickness=1)
+        middleFrame.grid(row=1, column=0)
+        middleFrame.grid_propagate(0)
+
+        headingFrame = Frame(middleFrame)
+        headingFrame.grid(row=0, column=0)
+        Label(headingFrame, text="PARAMETER NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=150)
+        Label(headingFrame, text="VALUE", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=45)
+        Label(headingFrame, relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=74)
+
+        middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
+        middleLowerFrame.grid(row=1, column=0)
+        detailsCanvas = Canvas(middleLowerFrame, height=390, width=700, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas.grid(row=0, column=0, pady=(16,0))
+        detailsScroll = Scrollbar(middleLowerFrame, orient=VERTICAL, command=detailsCanvas.yview)
+        detailsScroll.grid(row=0, column=1, sticky=NS)
+        detailsCanvas.config(yscrollcommand=detailsScroll.set)
+        detailsCanvas.bind("<Configure>", lambda e: detailsCanvas.configure(scrollregion=detailsCanvas.bbox("all")))
+        detailsFrame = Frame(detailsCanvas, background="#FCFCFC")
+        detailsCanvas.create_window((0,0), window=detailsFrame, anchor="nw")
+
+        parameterList = [
+            "UPPER PLATE DOWN TIME",
+            "UPPER PLATE DOWN MAX PRESSURE"
+        ]
+        valueFrame = [0]*2
+        values = [2000, 4]
+
+        for i in range(2):
+            Label(detailsFrame, text=parameterList[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=0, padx=(10,0), sticky="w")
+            Label(detailsFrame, height=11, width=40, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(50,0))
+            Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=1, padx=(50,0))
+
+        btnPadding=45
+        btn0 = Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'))
+        btn0.grid(row=0, column=2, padx=(btnPadding,0))
 
 if __name__ == "__main__":
     #initIO()
