@@ -151,13 +151,13 @@ class DiagnosticsInputsPage(Frame):
 
         headingFrame = Frame(middleFrame)
         headingFrame.grid(row=0, column=0)
-        Label(headingFrame, text="INPUT NUMBER", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=5)
-        Label(headingFrame, text="NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=180)
-        Label(headingFrame, text="STATUS", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=37)
+        Label(headingFrame, text="INPUT No.", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=5)
+        Label(headingFrame, text="NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=209)
+        Label(headingFrame, text="STATUS", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=36)
 
         middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
         middleLowerFrame.grid(row=1, column=0)
-        detailsCanvas = Canvas(middleLowerFrame, height=390, width=670, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas = Canvas(middleLowerFrame, height=390, width=675, background="#FCFCFC", highlightthickness=0)
         detailsCanvas.grid(row=0, column=0, pady=(16,0))
         detailsScroll = Scrollbar(middleLowerFrame, orient=VERTICAL, command=detailsCanvas.yview)
         detailsScroll.grid(row=0, column=1, sticky=NS)
@@ -182,10 +182,10 @@ class DiagnosticsInputsPage(Frame):
         self.iconPressed = PhotoImage(file="Assets/Icons/InputBtnPressed.png")
         iconInputsLabel = [0]*11
         for i in range(11):
-            Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(43,43))
-            Label(detailsFrame, text=displayInputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w", padx=(0,145))
+            Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(32,32))
+            Label(detailsFrame, text=displayInputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w")
             iconInputsLabel[i] = Label(detailsFrame, background="#FCFCFC", image=self.iconPressed)
-            iconInputsLabel[i].grid(row=i, column=3)
+            iconInputsLabel[i].grid(row=i, column=3, padx=(175,0))
 
         lowerFrame = Frame(self)
         lowerFrame.grid(row=2, column=0)
@@ -213,13 +213,13 @@ class DiagnosticsOutputsPage(Frame):
 
         headingFrame = Frame(middleFrame)
         headingFrame.grid(row=0, column=0)
-        Label(headingFrame, text="OUTPUT NUMBER", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=5)
-        Label(headingFrame, text="NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=180)
-        Label(headingFrame, text="STATUS", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=37)
+        Label(headingFrame, text="OUTPUT No.", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0, ipadx=1)
+        Label(headingFrame, text="NAME", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=1, ipadx=205)
+        Label(headingFrame, text="STATUS", relief=GROOVE, font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2, ipadx=36)
 
         middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
         middleLowerFrame.grid(row=1, column=0)
-        detailsCanvas = Canvas(middleLowerFrame, height=390, width=670, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas = Canvas(middleLowerFrame, height=390, width=674, background="#FCFCFC", highlightthickness=0)
         detailsCanvas.grid(row=0, column=0, pady=(16,0))
         detailsScroll = Scrollbar(middleLowerFrame, orient=VERTICAL, command=detailsCanvas.yview)
         detailsScroll.grid(row=0, column=1, sticky=NS)
@@ -243,9 +243,9 @@ class DiagnosticsOutputsPage(Frame):
         iconOutputsLabel = [0]*9
         for i in range(9):
             Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(43,43))
-            Label(detailsFrame, text=displayOutputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w", padx=(0,145))
+            Label(detailsFrame, text=displayOutputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w")
             iconOutputsLabel[i] = Label(detailsFrame, background="#FCFCFC", image=self.iconPressed)
-            iconOutputsLabel[i].grid(row=i, column=3)
+            iconOutputsLabel[i].grid(row=i, column=3, padx=(175,0))
 
         lowerFrame = Frame(self)
         lowerFrame.grid(row=2, column=0)
@@ -296,8 +296,8 @@ class ParametersPage(Frame):
         values = [2000, 4]
 
         for i in range(2):
-            Label(detailsFrame, text=parameterList[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=0, padx=(10,0), sticky="w")
-            labelPadLeft=125
+            Label(detailsFrame, text=parameterList[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=0, sticky="w")
+            labelPadLeft=135
             Label(detailsFrame, height=11, width=100, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(labelPadLeft,0))
             Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=i, column=1, padx=(labelPadLeft,0))
 
