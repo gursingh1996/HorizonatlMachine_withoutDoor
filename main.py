@@ -10,7 +10,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(ParametersPage)
+        self.switch_frame(ParameterInputPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -300,12 +300,43 @@ class ParametersPage(Frame):
             labelPadLeft=135
             Label(detailsFrame, height=11, width=100, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(labelPadLeft,0))
             Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=i, column=1, padx=(labelPadLeft,0))
+            Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=i, column=2, padx=(30,0))
 
-        btnPadLeft=30
-        btn0 = Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'))
-        btn0.grid(row=0, column=2, padx=(btnPadLeft,0))
-        btn1 = Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'))
-        btn1.grid(row=1, column=2, padx=(btnPadLeft,0))
+class ParameterInputPage(Frame):
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        mainFrame = Frame(self, height=576, width=720, background="#EEEEEE")
+        mainFrame.grid()
+        mainFrame.grid_propagate(0)
+        mainFrame.columnconfigure(0, weight=1)
+        headingLabel = Label(mainFrame, fg="#515151", bg="#EEEEEE", text="UPPER PLATE DOWN TIME", font=font.Font(family="Malgun Gothic", size=15, weight='bold'))
+        headingLabel.grid(row=0, column=0, pady=(10,0))    #new - north east west
+        oldValFrame = Frame(mainFrame, background="#EEEEEE")
+        oldValFrame.grid(row=1, column=0, pady=(10,0))
+        Label(oldValFrame, text="OLD VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=0, column=0)
+        oldValLabel = Label(oldValFrame, fg="#515151", bg="#EEEEEE", text="20s", font=font.Font(family="Malgun Gothic", size=12, weight='bold'))
+        oldValLabel.grid(row=0, column=1)
+        newValFrame = Frame(mainFrame, background="#EEEEEE")
+        newValFrame.grid(row=2, column=0, pady=(10,0))
+        Label(newValFrame, text="NEW VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=0, column=0)
+        Label(newValFrame, height=11, width=120, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=0, column=1)
+        keypadFrame = Frame(mainFrame, background="#EEEEEE")
+        keypadFrame.grid(row=3, column=0, pady=(24,0))
+        keypadVal=1
+        for i in range(3):
+            for j in range(3):
+                Button(keypadFrame, text=keypadVal, height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=i, column=j)
+                keypadVal+=1
+        Button(keypadFrame, text=".", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=0)
+        Button(keypadFrame, text="0", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=1)
+        Button(keypadFrame, text="C", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=2)
+        mainFrame.rowconfigure(4, weight=1)
+        lowerFrame = Frame(mainFrame, background="#B1B1B1")
+        lowerFrame.grid(row=4, column=0, sticky="sew")
+        lowerFrame.columnconfigure(0, weight=1)
+        lowerFrame.columnconfigure(1, weight=1)
+        Button(lowerFrame, text="OK", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=3, column=0, sticky="e")
+        Button(lowerFrame, text="CANCEL", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=3, column=1, sticky="w")
 
 if __name__ == "__main__":
     #initIO()
@@ -313,5 +344,5 @@ if __name__ == "__main__":
     app = myApp()
     app.geometry("720x576")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
