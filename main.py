@@ -143,7 +143,7 @@ class DiagnosticsInputsPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
         Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
@@ -205,7 +205,7 @@ class DiagnosticsOutputsPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
         Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
@@ -265,7 +265,7 @@ class ParametersPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
         Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=496, width=720, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0)
@@ -300,7 +300,7 @@ class ParametersPage(Frame):
             labelPadLeft=135
             Label(detailsFrame, height=11, width=100, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(labelPadLeft,0))
             Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=i, column=1, padx=(labelPadLeft,0))
-            Button(detailsFrame, height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=i, column=2, padx=(30,0))
+            Button(detailsFrame, background="#C5C5C5", activebackground="#C5C5C5", fg="#212121", activeforeground="#212121", height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'), command=lambda: master.switch_frame(ParameterInputPage)).grid(row=i, column=2, padx=(30,0))
 
 class ParameterInputPage(Frame):
     def __init__(self, master):
@@ -330,18 +330,18 @@ class ParameterInputPage(Frame):
         btnWidth=8
         for i in range(3):
             for j in range(3):
-                Button(keypadFrame, text=keypadVal, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=i, column=j, sticky="nsew")
+                Button(keypadFrame, text=keypadVal, activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=i, column=j, sticky="nsew")
                 keypadVal+=1
-        Button(keypadFrame, text=".", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=0, sticky="nsew")
-        Button(keypadFrame, text="0", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=1, sticky="nsew")
-        Button(keypadFrame, text="C", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=2, sticky="nsew")
+        Button(keypadFrame, text=".", activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=0, sticky="nsew")
+        Button(keypadFrame, text="0", activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=1, sticky="nsew")
+        Button(keypadFrame, text="C", activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=3, column=2, sticky="nsew")
         mainFrame.rowconfigure(4, weight=1)
         lowerFrame = Frame(mainFrame, background="#B1B1B1")
         lowerFrame.grid(row=4, column=0, sticky="sew")
         lowerFrame.columnconfigure(0, weight=1)
         lowerFrame.columnconfigure(1, weight=1)
-        Button(lowerFrame, text="OK", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=3, column=0, sticky="e")
-        Button(lowerFrame, text="CANCEL", height=2, width=13, fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=3, column=1, sticky="w")
+        Button(lowerFrame, text="OK", height=2, width=13, activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold'), command=lambda: master.switch_frame(ParametersPage)).grid(row=3, column=0, sticky="e")
+        Button(lowerFrame, text="CANCEL", height=2, width=13, activebackground="#ffffff", activeforeground="#515151", fg="#515151", bg="#ffffff", font=font.Font(family="Malgun Gothic", size=12, weight='bold'), command=lambda: master.switch_frame(ParametersPage)).grid(row=3, column=1, sticky="w")
 
 if __name__ == "__main__":
     #initIO()
