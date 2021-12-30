@@ -305,22 +305,22 @@ class ParametersPage(Frame):
 class ParameterInputPage(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
-        mainFrame = Frame(self, height=576, width=720, background="#EEEEEE")
+        mainFrame = Frame(self, height=480, width=800, background="#EEEEEE")
         mainFrame.grid()
         mainFrame.grid_propagate(0)
         mainFrame.columnconfigure(0, weight=1)
-        headingLabel = Label(mainFrame, fg="#515151", bg="#EEEEEE", text="UPPER PLATE DOWN TIME", font=font.Font(family="Malgun Gothic", size=16, weight='bold'))
-        headingLabel.grid(row=0, column=0, pady=(20,0))    #new - north east west
+        headingLabel = Label(mainFrame, fg="#515151", bg="#EEEEEE", text="UPPER PLATE DOWN TIME", font=font.Font(family="Malgun Gothic", size=14, weight='bold'))
+        headingLabel.grid(row=0, column=0, pady=(15,0))    #new - north east west
         oldValFrame = Frame(mainFrame, background="#EEEEEE")
-        oldValFrame.grid(row=1, column=0, pady=(20,0))
-        Label(oldValFrame, text="OLD VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=14, weight='bold')).grid(row=0, column=0)
-        oldValLabel = Label(oldValFrame, fg="#515151", bg="#EEEEEE", text="20s", font=font.Font(family="Malgun Gothic", size=14, weight='bold'))
+        oldValFrame.grid(row=1, column=0, pady=(15,0))
+        Label(oldValFrame, text="OLD VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=0, column=0)
+        oldValLabel = Label(oldValFrame, fg="#515151", bg="#EEEEEE", text="20s", font=font.Font(family="Malgun Gothic", size=12, weight='bold'))
         oldValLabel.grid(row=0, column=1)
         newValFrame = Frame(mainFrame, background="#EEEEEE")
-        newValFrame.grid(row=2, column=0, pady=(20,0))
-        Label(newValFrame, text="NEW VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=16, weight='bold')).grid(row=0, column=0)
-        Label(newValFrame, height=13, width=120, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=0, column=1)
-        keypadFrame = Frame(mainFrame, background="#EEEEEE", height=300, width=400)
+        newValFrame.grid(row=2, column=0, pady=(15,0))
+        Label(newValFrame, text="NEW VALUE: ", fg="#515151", bg="#EEEEEE", font=font.Font(family="Malgun Gothic", size=14, weight='bold')).grid(row=0, column=0)
+        Label(newValFrame, height=11, width=120, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=0, column=1)
+        keypadFrame = Frame(mainFrame, background="#EEEEEE", height=240, width=400)
         keypadFrame.grid(row=3, column=0, pady=(32,0))
         keypadFrame.grid_propagate(0)
         for i in range(4):
@@ -347,7 +347,8 @@ if __name__ == "__main__":
     #initIO()
     #machine_operate.start_machineOperate_thread()
     app = myApp()
-    app.geometry("720x576")     #resolution of the screen being used
+    app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
+    app.config(cursor="none")
     app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
