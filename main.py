@@ -10,7 +10,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(ParameterInputPage)
+        self.switch_frame(StartPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -21,120 +21,118 @@ class myApp(Tk):
 
 class StartPage(Frame):
     def __init__(self, master):
-        Frame.__init__(self, master, bg=mainBackgroundColor)      
+        Frame.__init__(self, master, bg=mainBackgroundColor)     
+        mainFrame = Frame(self, height=480, width=800, background=mainBackgroundColor)
+        mainFrame.grid()
+        mainFrame.grid_propagate(0)
+        mainFrame.columnconfigure(0, weight=1)
 
         topFrameBgColor = "#F6F6F6"
-        topFrame = Frame(self, background=topFrameBgColor)
-        middleUpperFrame = Frame(self, background=mainBackgroundColor)
-        middleLowerFrame = Frame(self, height=45, width=700, background=mainBackgroundColor)
-        bottomFrame = Frame(self)
-
-        topFrame.grid(row=0, column=0)
-        middleUpperFrame.grid(row=1, column=0, pady=(16,0))
-        middleLowerFrame.grid_propagate(0)          #donot change size of frame when its content is changed
-        middleLowerFrame.grid(row=2, column=0, padx=(0,17), pady=(19,0))       #0,17
-        bottomFrame.grid(row=3, column=0)
-
+        topFrame = Frame(mainFrame, background=topFrameBgColor)
+        topFrame.grid(row=0, column=0, sticky="new")
+        topFrame.columnconfigure(0, weight=1)
+        topFrame.columnconfigure(1, weight=1)
+        topFrame.columnconfigure(1, weight=1)
         self.logoImg = PhotoImage(file="Assets/Icons/logo.png")
-        logoLabel = Label(topFrame, image=self.logoImg, background=topFrameBgColor)
-        machineNameFont = font.Font(family="Segoe UI", size=28, weight='bold')
-        machineNameLabel = Label(topFrame, text="HMU-3000", font=machineNameFont, fg="#6B6B6B", background=topFrameBgColor)
+        Label(topFrame, image=self.logoImg, background=topFrameBgColor).grid(row=0, column=0, sticky="w", padx=(20,0))
+        Label(topFrame, text="HMU-3000", font=font.Font(family="Malgun Gothic", size=24, weight='bold'), fg="#6B6B6B", background=topFrameBgColor).grid(row=0, column=1, sticky="w", pady=(9,9))
         dateAndTimeFrame = Frame(topFrame, background=topFrameBgColor)
-        dateTimeFont = font.Font(family="Segoe UI", size=10, weight='bold')
-        dateLabel = Label(dateAndTimeFrame, text="25-Dec-2021", background=topFrameBgColor, font=dateTimeFont, fg="#6B6B6B")
-        timeLabel = Label(dateAndTimeFrame, text="02:30 p.m.", background=topFrameBgColor, font=dateTimeFont, fg="#6B6B6B")
-
-        logoLabel.grid(row=0, column=0, padx=(20,0))
-        machineNameLabel.grid(row=0, column=1, padx=(132,132), pady=(6,6))
-        dateAndTimeFrame.grid(row=0, column=2, padx=(0,10))
+        dateAndTimeFrame.grid(row=0, column=2, sticky="e", padx=(0,10))
+        dateLabel = Label(dateAndTimeFrame, text="25-Dec-2021", background=topFrameBgColor, font=font.Font(family="Segoe UI", size=10, weight='bold'), fg="#6B6B6B")
         dateLabel.grid(row=0, column=0)
+        timeLabel = Label(dateAndTimeFrame, text="02:30 p.m.", background=topFrameBgColor, font=font.Font(family="Segoe UI", size=10, weight='bold'), fg="#6B6B6B")
         timeLabel.grid(row=1, column=0, padx=(15,0))
 
+        middleUpperFrame = Frame(mainFrame, background=mainBackgroundColor)
+        middleUpperFrame.grid(row=1, column=0, sticky="ew", pady=(16,0))
+        middleUpperFrame.columnconfigure(0, weight=1)
+        middleUpperFrame.columnconfigure(1, weight=1)
         videLabel = Label(middleUpperFrame, bd=0)
         myVideoPlayer = videoPlayer.videoPlayer(videLabel)   #use label as area to project video
         myVideoPlayer.play()    #creates a thread to play the video
-        
+        videLabel.grid(row=0, column=0, sticky="w")
         sensorDisplayFrameBgColor = "#EEEEEE"
-        sensorDisplayFrame = Frame(middleUpperFrame, background=sensorDisplayFrameBgColor)
-        sensorDisplayUpperTextFont = font.Font(family="Segoe UI", size=14, weight='bold')
-        sensorDisplayTextColor = "#515151"
-        sensorDisplayUnitTextFont = font.Font(family="Segoe UI", size=12, weight='bold')
-        sensorDisplayValueTextFont = font.Font(family="Segoe UI", size=17, weight='bold')
+        sensorDisplayFrame = Frame(middleUpperFrame, background=sensorDisplayFrameBgColor, highlightbackground="#707070", highlightthickness=1)
+        sensorDisplayFrame.grid(row=0, column=1, sticky="nsw")
 
-        pressureFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
-        pressureText = Label(pressureFrame, background=sensorDisplayFrameBgColor, text="Pressure:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
-        pressureText.grid(row=0, column=0, padx=(5,0))
-        pressureValueFrame = Frame(pressureFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
-        pressureValueFrame.grid(row=1, columnspan=8, padx=(10,0))
-        pressureValueFrame.grid_propagate(0)
-        pressureValueText = Label(pressureValueFrame, text="2200", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
-        pressureValueText.grid(pady=(3,0))
-        pressureUnitText = Label(pressureFrame, background=sensorDisplayFrameBgColor, text="PSI", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
-        pressureUnitText.grid(row=1, column=9, padx=(3,3))
-        pressureFrame.grid(row=0, column=0, pady=(19,0), padx=(2,8))
+        sensorDisplayUpperTextFont = font.Font(family="Malgun Gothic", size=13, weight='bold')
+        sensorDisplayUnitTextFont = font.Font(family="Malgun Gothic", size=12, weight='bold')
+        sensorDisplayValueTextFont = font.Font(family="Malgun Gothic", size=13, weight='bold')
 
-        voltageFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
-        voltageText = Label(voltageFrame, background=sensorDisplayFrameBgColor, text="Voltage:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
-        voltageText.grid(row=0, column=0)
-        voltageValueFrame = Frame(voltageFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
-        voltageValueFrame.grid(row=1, columnspan=8, padx=(6,0))
-        voltageValueFrame.grid_propagate(0)
-        voltageValueText = Label(voltageValueFrame, text="220", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
-        voltageValueText.grid(pady=(3,0))
-        voltageUnitText = Label(voltageFrame, background=sensorDisplayFrameBgColor, text="V", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
-        voltageUnitText.grid(row=1, column=9, padx=(3,15))
-        voltageFrame.grid(row=1, column=0, pady=(11,0), padx=(2,8))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="PRESSURE:", font=sensorDisplayUpperTextFont, fg="#515151").grid(row=0, column=0, sticky="w", padx=(4,0), pady=(5,0))
+        Label(sensorDisplayFrame, background="#ffffff", font=font.Font(family="Malgun Gothic", size=1), highlightbackground='#000000', highlightthickness=1, height=12, width=200).grid(row=1, column=0, padx=(8,0))
+        pressureValueText = Label(sensorDisplayFrame, text="2200", fg="black", font=sensorDisplayValueTextFont, background="#ffffff")
+        pressureValueText.grid(row=1, column=0, padx=(10,0))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="PSI", font=sensorDisplayUnitTextFont, fg="#515151").grid(row=1, column=1, padx=(3,8))
 
-        currentFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
-        currentText = Label(currentFrame, background=sensorDisplayFrameBgColor, text="Motor Current:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
-        currentText.grid(row=0, column=0, padx=(5,0))
-        currentValueFrame = Frame(currentFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
-        currentValueFrame.grid(row=1, columnspan=8, padx=(6,0))
-        currentValueFrame.grid_propagate(0)
-        currentValueText = Label(currentValueFrame, text="20", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
-        currentValueText.grid(pady=(3,0))
-        currentUnitText = Label(currentFrame, background=sensorDisplayFrameBgColor, text="A", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
-        currentUnitText.grid(row=1, column=9, padx=(3,15))
-        currentFrame.grid(row=2, column=0, pady=(11,0), padx=(2,8))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="VOLTAGE:", font=sensorDisplayUpperTextFont, fg="#515151").grid(row=2, column=0, sticky="w", padx=(4,0), pady=(5,0))
+        Label(sensorDisplayFrame, background="#ffffff", font=font.Font(family="Malgun Gothic", size=1), highlightbackground='#000000', highlightthickness=1, height=12, width=200).grid(row=3, column=0, padx=(8,0))
+        voltageValueText = Label(sensorDisplayFrame, text="240", fg="black", font=sensorDisplayValueTextFont, background="#ffffff")
+        voltageValueText.grid(row=3, column=0, padx=(10,0))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="V", font=sensorDisplayUnitTextFont, fg="#515151").grid(row=3, column=1, padx=(3,8))
 
-        tempFrame = Frame(sensorDisplayFrame, background=sensorDisplayFrameBgColor)
-        tempText = Label(tempFrame, background=sensorDisplayFrameBgColor, text="Oil Temprature:", font=sensorDisplayUpperTextFont, fg=sensorDisplayTextColor)
-        tempText.grid(row=0, column=0, padx=(9,0))
-        tempValueFrame = Frame(tempFrame, background="#ffffff", highlightbackground='#000000', highlightthickness=1, height=40, width=220)
-        tempValueFrame.grid_propagate(0)
-        tempValueFrame.grid(row=1, columnspan=8, padx=(10,0))
-        tempValueFrame.grid_propagate(0)
-        tempValueText = Label(tempValueFrame, text="45", fg="black", font=sensorDisplayValueTextFont, width=13, background="#ffffff")
-        tempValueText.grid(pady=(3,0))
-        tempUnitText = Label(tempFrame, background=sensorDisplayFrameBgColor, text="°C", font=sensorDisplayUnitTextFont, fg=sensorDisplayTextColor)
-        tempUnitText.grid(row=1, column=9, padx=(3,15))
-        tempFrame.grid(row=3, column=0, pady=(11,30), padx=(2,8))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="MOTOR CURRENT:", font=sensorDisplayUpperTextFont, fg="#515151").grid(row=4, column=0, sticky="w", padx=(4,0), pady=(5,0))
+        Label(sensorDisplayFrame, background="#ffffff", font=font.Font(family="Malgun Gothic", size=1), highlightbackground='#000000', highlightthickness=1, height=12, width=200).grid(row=5, column=0, padx=(8,0))
+        currentValueText = Label(sensorDisplayFrame, text="30", fg="black", font=sensorDisplayValueTextFont, background="#ffffff")
+        currentValueText.grid(row=5, column=0, padx=(10,0))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="A", font=sensorDisplayUnitTextFont, fg="#515151").grid(row=5, column=1, padx=(3,8))
 
-        videLabel.grid(row=0, column=0, padx=(0,20))
-        sensorDisplayFrame.grid(row=0, column=1, padx=(0,20))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="OIL TEMPRATURE:", font=sensorDisplayUpperTextFont, fg="#515151").grid(row=6, column=0, sticky="w", padx=(4,0), pady=(5,0))
+        Label(sensorDisplayFrame, background="#ffffff", font=font.Font(family="Malgun Gothic", size=1), highlightbackground='#000000', highlightthickness=1, height=12, width=200).grid(row=7, column=0, padx=(8,0))
+        tempratureValueText = Label(sensorDisplayFrame, text="45", fg="black", font=sensorDisplayValueTextFont, background="#ffffff")
+        tempratureValueText.grid(row=7, column=0, padx=(10,0))
+        Label(sensorDisplayFrame, background=sensorDisplayFrameBgColor, text="°C", font=sensorDisplayUnitTextFont, fg="#515151").grid(row=7, column=1, padx=(3,8))
 
-        middleLowerFrameFont = font.Font(family="Segoe UI", size=12, weight='bold')
-        runTimeText = Label(middleLowerFrame, text="Run Time: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
-        runTimeText.grid(row=0, column=0)
-        runTimeValue = Label(middleLowerFrame, text="1h 20m", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
-        runTimeValue.grid(row=0, column=1)
+        mainFrame.rowconfigure(2, weight=1)
+        midLowerFrame = Frame(mainFrame, background=mainBackgroundColor)
+        midLowerFrame.grid(row=2, column=0, sticky="sew")
+        midLowerFrame.columnconfigure(0, weight=1)
+        midLowerFrame.columnconfigure(1, weight=1)
+        middleLowerFont = font.Font(family="Malgun Gothic", size=12, weight='bold')
+        runTimeValue = Label(midLowerFrame, text="Run Time: 1h 20m", fg="#515151", font=middleLowerFont, background=mainBackgroundColor)
+        runTimeValue.grid(row=0, column=0, sticky="w", padx=(5,0))
+        bundleCountValue = Label(midLowerFrame, text="Bundle Count: 10000", fg="#515151", font=middleLowerFont, background=mainBackgroundColor)
+        bundleCountValue.grid(row=0, column=1, sticky="e", padx=(0,10))
 
-        bundleCountText = Label(middleLowerFrame, text="Bundle Count: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
-        bundleCountText.grid(row=0, column=2, padx=(355,0))
-        bundleCountValue = Label(middleLowerFrame, text="100", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
-        bundleCountValue.grid(row=0, column=3)
+        mainFrame.rowconfigure(3, weight=1)
+        bottomFrame = Frame(mainFrame, height=60)
+        bottomFrame.grid(row=3, column=0, sticky="sew")
+        bottomFrame.grid_propagate(0)
+        bottomFrame.rowconfigure(0, weight=1)
+        for i in range(4):
+            bottomFrame.columnconfigure(i, weight=1)
+        
+        btnFont = font.Font(family="Malgun Gothic", size=11, weight='bold')
+        btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(DiagnosticsInputsPage))
+        btnDiagnostics.grid(row=0, column=0, sticky="nsew")
+        btnWarnings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="WARNINGS", font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnWarnings.grid(row=0, column=1, sticky="nsew")
+        btnErrors = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="ERRORS", font=btnFont, fg="#515151", bg="#EEEEEE")
+        btnErrors.grid(row=0, column=2, sticky="nsew")
+        btnSettings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="PARAMETERS", font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(ParametersPage))
+        btnSettings.grid(row=0, column=3, sticky="nsew")
 
-        btnFont = font.Font(family="Segoe UI", size=11, weight='bold')
-        btnWidth = 15
-        btnHeight = 4
-        btnDiagnostics = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="DIAGNOSTICS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(DiagnosticsInputsPage))
-        btnDiagnostics.grid(row=0, column=0)
-        btnWarnings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="WARNINGS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
-        btnWarnings.grid(row=0, column=1)
-        btnErrors = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="ERRORS", height=btnHeight, width=btnWidth, font=btnFont, fg="#515151", bg="#EEEEEE")
-        btnErrors.grid(row=0, column=2)
-        btnSettings = Button(bottomFrame, activebackground="#EEEEEE", activeforeground="#515151", text="PARAMETERS", height=btnHeight, width=btnWidth+1, font=btnFont, fg="#515151", bg="#EEEEEE", command=lambda: master.switch_frame(ParametersPage))
-        btnSettings.grid(row=0, column=3)
+
+        # middleLowerFrame = Frame(self, height=45, width=700, background=mainBackgroundColor)
+        # bottomFrame = Frame(self)
+
+        
+        # middleLowerFrame.grid_propagate(0)          #donot change size of frame when its content is changed
+        # middleLowerFrame.grid(row=2, column=0, padx=(0,17), pady=(19,0))       #0,17
+
+        
+
+
+        
+        
+        
+
+        # bundleCountText = Label(middleLowerFrame, text="Bundle Count: ", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        # bundleCountText.grid(row=0, column=2, padx=(355,0))
+        # bundleCountValue = Label(middleLowerFrame, text="100", fg="#515151", font=middleLowerFrameFont, background=mainBackgroundColor)
+        # bundleCountValue.grid(row=0, column=3)
+
+        
 
 class DiagnosticsInputsPage(Frame):
     def __init__(self, master):
@@ -143,8 +141,8 @@ class DiagnosticsInputsPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Malgun Gothic", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Malgun Gothic", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
         middleFrame.grid_propagate(0)
@@ -205,8 +203,8 @@ class DiagnosticsOutputsPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Malgun Gothic", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Malgun Gothic", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=445, width=691, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0, padx=(10,10))
         middleFrame.grid_propagate(0)
@@ -265,8 +263,8 @@ class ParametersPage(Frame):
         topFrame = Frame(self, background="#E8E8E8", height=80, width=720)
         topFrame.grid(row=0, column=0)
         topFrame.grid_propagate(0)
-        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Segoe UI", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
-        Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Segoe UI", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
+        Button(topFrame, height=2, width=7, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Malgun Gothic", size=15, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(row=0, column=0, padx=(14,0), pady=(9,0))
+        Label(topFrame, text="PARAMETERS", background="#E8E8E8", fg="#545454", font=font.Font(family="Malgun Gothic", size=22, weight='bold')).grid(row=0, column=1, padx=(100,0), pady=(11,0))
         middleFrame = Frame(self, background="#FCFCFC", height=496, width=720, highlightbackground='#000000', highlightthickness=1)
         middleFrame.grid(row=1, column=0)
         middleFrame.grid_propagate(0)
