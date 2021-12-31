@@ -10,7 +10,7 @@ class myApp(Tk):
     def __init__(self):
         Tk.__init__(self)
         self._frame = None
-        self.switch_frame(ParametersPage)
+        self.switch_frame(DiagnosticsOutputsPage)
 
     def switch_frame(self, frame_class):
         new_frame = frame_class(self)
@@ -260,10 +260,10 @@ class DiagnosticsOutputsPage(Frame):
         self.iconActive = PhotoImage(file="Assets/Icons/OutputOn.png")
         iconOutputsLabel = [0]*9
         for i in range(9):
-            Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(32,32))
-            Label(detailsFrame, text=displayOutputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, padx=(5,0), pady=(5,5), sticky="w")
+            Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(41,41))
+            Label(detailsFrame, text=displayOutputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, padx=(8,0), pady=(5,5), sticky="w")
             iconOutputsLabel[i] = Label(detailsFrame, background="#FCFCFC", image=self.iconActive)
-            iconOutputsLabel[i].grid(row=i, column=3, padx=(216,0))
+            iconOutputsLabel[i].grid(row=i, column=3, padx=(225,0))
 
         mainFrame.rowconfigure(2, weight=1)
         lowerFrame = Frame(mainFrame, bg=mainBackgroundColor, height=42)
@@ -310,9 +310,9 @@ class ParametersPage(Frame):
         middleFrame.columnconfigure(0, weight=1)
         headingFrame = Frame(middleFrame, bg="#FCFCFC")
         headingFrame.grid(row=0, column=0, sticky="new")
-        headingFrame.columnconfigure(0, weight=40)
+        headingFrame.columnconfigure(0, weight=42)
         headingFrame.columnconfigure(2, weight=10)
-        headingFrame.columnconfigure(4, weight=10)
+        headingFrame.columnconfigure(4, weight=13)
         Label(headingFrame, text="PARAMETER NAME", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0)
         Frame(headingFrame, bg="#6B6B6B", height=20, width=2).grid(row=0, column=1, sticky="n")
         Label(headingFrame, text="VALUE", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2)
@@ -321,8 +321,8 @@ class ParametersPage(Frame):
 
         middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
         middleLowerFrame.grid(row=1, column=0)
-        detailsCanvas = Canvas(middleLowerFrame, height=335, width=753, background="#FCFCFC", highlightthickness=0)
-        detailsCanvas.grid(row=0, column=0, pady=(0,5))
+        detailsCanvas = Canvas(middleLowerFrame, height=400, width=772, background="#FCFCFC", highlightthickness=0)
+        detailsCanvas.grid(row=0, column=0)
         detailsScroll = Scrollbar(middleLowerFrame, width=18, elementborderwidth=2, activebackground=mainBackgroundColor, bg=mainBackgroundColor, bd=0, highlightbackground="#E8E8E8", highlightthickness=3, troughcolor="#E8E8E8", orient=VERTICAL, command=detailsCanvas.yview)
         detailsScroll.grid(row=0, column=1, sticky=NS)
         detailsCanvas.config(yscrollcommand=detailsScroll.set)
@@ -339,7 +339,7 @@ class ParametersPage(Frame):
 
         for i in range(2):
             Label(detailsFrame, text=parameterList[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=11, weight='bold')).grid(row=i, column=0, sticky="w")
-            labelPadLeft=135
+            labelPadLeft=220
             Label(detailsFrame, height=11, width=100, background="#ffffff", highlightbackground="black", highlightthickness=1, font=font.Font(size=1)).grid(row=i, column=1, pady=(8,8), padx=(labelPadLeft,0))
             Label(detailsFrame, background="#ffffff", text=values[i], font=font.Font(family="Malgun Gothic", size=12, weight='bold')).grid(row=i, column=1, padx=(labelPadLeft,0))
             Button(detailsFrame, background="#C5C5C5", activebackground="#C5C5C5", fg="#212121", activeforeground="#212121", height=1, text="CHANGE", font=font.Font(family="Malgun Gothic", size=10, weight='bold'), command=lambda: master.switch_frame(ParameterInputPage)).grid(row=i, column=2, padx=(30,0))
@@ -391,6 +391,6 @@ if __name__ == "__main__":
     app = myApp()
     app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    # app.config(cursor="none")
-    # app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    app.config(cursor="none")
+    app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
