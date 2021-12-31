@@ -130,7 +130,7 @@ class DiagnosticsInputsPage(Frame):
         btnFrame.rowconfigure(0, weight=1)
         btnFrame.columnconfigure(0, weight=1)
         Button(btnFrame, text="BACK", activebackground="#FFFFFF", activeforeground="#6B6B6B", background="#FFFFFF", fg="#6B6B6B", font=font.Font(family="Malgun Gothic", size=11, weight='bold'), command=lambda: master.switch_frame(StartPage)).grid(sticky="nsew")
-        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Malgun Gothic", size=18, weight='bold')).grid(row=0, column=1, sticky="w", pady=(8,8), padx=(10,0))
+        Label(topFrame, text="DIAGNOSTICS", background="#E8E8E8", fg="#545454", font=font.Font(family="Malgun Gothic", size=18, weight='bold')).grid(row=0, column=1, sticky="w", pady=(8,8), padx=(70,0))
 
         mainFrame.rowconfigure(1, weight=500)
         middleFrame = Frame(mainFrame, background="#FCFCFC", highlightbackground='#000000', highlightthickness=1)
@@ -143,16 +143,16 @@ class DiagnosticsInputsPage(Frame):
         headingFrame.columnconfigure(2, weight=50)
         headingFrame.columnconfigure(4, weight=10)
         Label(headingFrame, text="INPUT No.", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=0)
-        Frame(headingFrame, bg="#6B6B6B", height=20).grid(row=0, column=1, sticky="n")
+        Frame(headingFrame, bg="#6B6B6B", height=20, width=2).grid(row=0, column=1, sticky="n")
         Label(headingFrame, text="INPUT NAME", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=2)
-        Frame(headingFrame, bg="#6B6B6B", height=20).grid(row=0, column=3, sticky="n")
-        Label(headingFrame, text="STATUS", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=4, padx=(0,20))
+        Frame(headingFrame, bg="#6B6B6B", height=20, width=2).grid(row=0, column=3, sticky="n")
+        Label(headingFrame, text="STATUS", fg="#6B6B6B", bg="#FCFCFC", font=font.Font(family="Malgun Gothic", size=10, weight='bold')).grid(row=0, column=4, sticky="w", padx=(30,0))
 
         middleLowerFrame = Frame(middleFrame, background="#FCFCFC")
         middleLowerFrame.grid(row=1, column=0)
         detailsCanvas = Canvas(middleLowerFrame, height=335, width=753, background="#FCFCFC", highlightthickness=0)
         detailsCanvas.grid(row=0, column=0, pady=(0,5))
-        detailsScroll = Scrollbar(middleLowerFrame, width=25, orient=VERTICAL, command=detailsCanvas.yview)
+        detailsScroll = Scrollbar(middleLowerFrame, width=18, elementborderwidth=2, activebackground=mainBackgroundColor, bg=mainBackgroundColor, bd=0, highlightbackground="#E8E8E8", highlightthickness=3, troughcolor="#E8E8E8", orient=VERTICAL, command=detailsCanvas.yview)
         detailsScroll.grid(row=0, column=1, sticky=NS)
         detailsCanvas.config(yscrollcommand=detailsScroll.set)
         detailsCanvas.bind("<Configure>", lambda e: detailsCanvas.configure(scrollregion=detailsCanvas.bbox("all")))
@@ -176,9 +176,9 @@ class DiagnosticsInputsPage(Frame):
         iconInputsLabel = [0]*11
         for i in range(11):
             Label(detailsFrame, text=i+1, fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=0, padx=(32,32))
-            Label(detailsFrame, text=displayInputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, pady=(5,5), sticky="w")
+            Label(detailsFrame, text=displayInputs[i], fg="#4B4B4B", background="#FCFCFC", font=font.Font(family="Malgun Gothic", size=13, weight='bold')).grid(row=i, column=1, padx=(5,0), pady=(5,5), sticky="w")
             iconInputsLabel[i] = Label(detailsFrame, background="#FCFCFC", image=self.iconPressed)
-            iconInputsLabel[i].grid(row=i, column=3, padx=(175,0))
+            iconInputsLabel[i].grid(row=i, column=3, padx=(216,0))
 
         mainFrame.rowconfigure(2, weight=1)
         lowerFrame = Frame(mainFrame, bg=mainBackgroundColor, height=42)
@@ -349,6 +349,6 @@ if __name__ == "__main__":
     app = myApp()
     app.geometry("800x480")     #resolution of the screen being used
     app.config(bg=mainBackgroundColor)
-    #app.config(cursor="none")
-    #app.attributes('-fullscreen', True)        #uncomment to set in full screen
+    app.config(cursor="none")
+    app.attributes('-fullscreen', True)        #uncomment to set in full screen
     app.mainloop()
